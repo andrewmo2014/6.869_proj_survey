@@ -68,6 +68,28 @@ Instead, we want to find the \emph{global} optimal camera positions. This proces
 
 \subsection{Dense Reconstruction}
 
+We can now reconstruct the scene from calibrated cameras. We want to find eventually output a scene which is \emph{photo consistent}. Common approaches to this problem include: (1) building up a scene from points whose locations are found by triangulating between images; (2) starting with a volume which encloses the region of interest, and removing \emph{voxels} which are not photoconsistent; and (3) generating stereo depth maps for pairs of images, and then fusing them together.
+
+\subsubsection{Point Based Approaches}
+
+% Triangulating points
+% PMVS
+% CMVS?
+
+\subsubsection{Volumetric Approaches}
+
+% Voxels, photoinconsistency
+% Creating bounding box
+  % Convex hull
+
+\subsubsection{Stereo Depth Approaches}
+
+% Stereo matching
+% Semi-global matching
+% Graph cuts, dynamic programming
+% Fusing
+
+
 \section{Our Approach}
 
 % DIAGRAM OF OUR RECONSTRUCTION PIPELINE
@@ -81,14 +103,32 @@ Instead, we want to find the \emph{global} optimal camera positions. This proces
 %POISSON SURFACE RECONSTRUCTION
 
 
+\begin{figure}[t]
+  \begin{center}
+    % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+    \includegraphics[width=0.8\linewidth]{temple0001.png}
+  \end{center}
+  \caption{Sample input image (one of 312)}
+  \label{fig:long}
+  \label{fig:onecol}
+\end{figure}
 
+\begin{figure}[t]
+  \begin{center}
+    % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+    \includegraphics[width=0.8\linewidth]{sparse.png}
+  \end{center}
+  \caption{Sparse Reconstruction}
+  \label{fig:long}
+  \label{fig:onecol}
+\end{figure}
 
 \begin{figure}[t]
 \begin{center}
 % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
 \includegraphics[width=0.8\linewidth]{patches.png}
 \end{center}
-\caption{Output of PMVS}
+\caption{Dense Patch reconstruction}
 \label{fig:long}
 \label{fig:onecol}
 \end{figure}
@@ -98,12 +138,14 @@ Instead, we want to find the \emph{global} optimal camera positions. This proces
     % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
     \includegraphics[width=0.8\linewidth]{mesh.png}
   \end{center}
-  \caption{Use Poisson Surface Reconstruction to fit mesh to patches}
+  \caption{Poisson Surface Reconstruction to fit mesh to patches}
   \label{fig:long}
   \label{fig:onecol}
 \end{figure}
 
 
+
+% WE NEED TO ADD OUR SOURCES
 
 {\small
 \bibliographystyle{ieee}
