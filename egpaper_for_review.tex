@@ -94,6 +94,17 @@ We can now reconstruct the scene from calibrated cameras. We want to find eventu
 
 % DIAGRAM OF OUR RECONSTRUCTION PIPELINE
 
+\begin{figure*}[t]
+  \begin{center}
+    %\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+    \includegraphics[width=\linewidth]{pipeline.png}
+  \end{center}
+  \caption{Proposed Multi-View pre-processing and visualization pipeline.  After extracting features and camera calibration parameters from imported source images, point cloud reconstructions can be created from robust computer vision packages such as Bundler and CMVS/PMVS.  As a result, 3D editing software tools such as MeshLab and Blender can assist in further configuration and production of detailed meshes/textures.  These can be visualized in the Unity3D game engine, which supports Oculus Rift OVR integration.}
+  \label{fig:short}
+\end{figure*}
+
+
+
 %BUNDLER
 
 %PMVS
