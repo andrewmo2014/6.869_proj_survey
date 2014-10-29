@@ -1,48 +1,48 @@
-This is BibTeX, Version 0.99d (TeX Live 2013)
+This is BibTeX, Version 0.99d (TeX Live 2014)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: egpaper_for_review.aux
 The style file: ieee.bst
-I found no \citation commands---while reading file egpaper_for_review.aux
 Database file #1: egbib.bib
-You've used 0 entries,
+Warning--can't use both volume and number fields in fuse
+You've used 9 entries,
             2120 wiz_defined-function locations,
-            498 strings with 3742 characters,
-and the built_in function-call counts, 19 in all, are:
-= -- 0
-> -- 0
-< -- 0
-+ -- 0
-- -- 0
-* -- 3
-:= -- 7
-add.period$ -- 0
-call.type$ -- 0
-change.case$ -- 0
+            563 strings with 5095 characters,
+and the built_in function-call counts, 2972 in all, are:
+= -- 305
+> -- 116
+< -- 2
++ -- 47
+- -- 36
+* -- 225
+:= -- 494
+add.period$ -- 28
+call.type$ -- 9
+change.case$ -- 45
 chr.to.int$ -- 0
-cite$ -- 0
-duplicate$ -- 0
-empty$ -- 1
-format.name$ -- 0
-if$ -- 1
+cite$ -- 10
+duplicate$ -- 109
+empty$ -- 240
+format.name$ -- 36
+if$ -- 613
 int.to.chr$ -- 0
-int.to.str$ -- 0
-missing$ -- 0
-newline$ -- 3
-num.names$ -- 0
-pop$ -- 0
+int.to.str$ -- 9
+missing$ -- 9
+newline$ -- 48
+num.names$ -- 18
+pop$ -- 31
 preamble$ -- 1
-purify$ -- 0
+purify$ -- 36
 quote$ -- 0
-skip$ -- 1
+skip$ -- 78
 stack$ -- 0
-substring$ -- 0
-swap$ -- 0
-text.length$ -- 0
+substring$ -- 222
+swap$ -- 19
+text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 0
-warning$ -- 0
-while$ -- 0
-width$ -- 0
-write$ -- 2
-(There was 1 error message)
+type$ -- 36
+warning$ -- 1
+while$ -- 34
+width$ -- 10
+write$ -- 103
+(There was 1 warning)

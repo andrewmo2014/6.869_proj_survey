@@ -50,49 +50,47 @@ MIT\\
 
 %%%%%%%%% BODY TEXT
 \section{Introduction}
-Most current approaches to Multi-View Stereo can be broken down into three steps: feature matching, camera calibration, and dense reconstruction.
+Most current approaches to Multi-View Stereo can be broken down into three steps: feature matching, camera calibration, and dense reconstruction. In pipelines which result in a point cloud, surface reconstruction is applied as a final step.
 %-------------------------------------------------------------------------
 \subsection{Feature Matching}
 
 The first step in most Multi-View Stereo pipelines is finding correspondence points between images. Once we know these points, we can determine the relative position of the cameras which took the images. 
 
-First, we select features of interest in each image. There exist numerous algorithms for selecting these points (SIFT, SURF). The general idea behind most of them is to find a feature which is unique enough such that finding a similar feature in another images indicates with high probability that the two features corresponds to the same object in the scene.[Brown and Lowe, 2007]
+First, we select features of interest in each image. There exist numerous algorithms for selecting these points (SIFT, SURF). The general idea behind most of them is to find a feature which is unique enough such that finding a similar feature in another images indicates with high probability that the two features corresponds to the same object in the scene.\cite{brown}
 
-Once features have been extracted from each image, pairwise matches must be found. Matches will not exist for all features, so some criteria must be specified for when to accept a match. One such criteria is to match two features if the first is the best match for the second, and the second is the best match for the first. Another approach is to match one feature to another feature if the second best match is a much worse match than the best match. [Brown and Lowe, 2007]
+Once features have been extracted from each image, pairwise matches must be found. Matches will not exist for all features, so some criteria must be specified for when to accept a match. One such criteria is to match two features if the first is the best match for the second, and the second is the best match for the first. Another approach is to match one feature to another feature if the second best match is a much worse match than the best match.\cite{brown}
 
 \subsection{Camera Calibration}
 
-Now that we have correspondence points, we want to compute a homography relating one image to another. If we only wanted to find the orientation of one camera relative to another, we could use RANSAC to fit a homography (with the Discrete Linear Transform to make it linear).[Fischler, Bolles, 1981] However, if we only found the optimal pairwise relative positions, we would not be guaranteed that they would be consistent.
+Now that we have correspondence points, we want to compute a homography relating one image to another. If we only wanted to find the orientation of one camera relative to another, we could use RANSAC to fit a homography (with the Discrete Linear Transform to make it linear).\cite{ransac} However, if we only found the optimal pairwise relative positions, we would not be guaranteed that they would be consistent.
 
-Instead, we want to find the \emph{global} optimal camera positions. This process is known as Sparse Bundle Adjustment, and can been seen as minimizing a series of nonlinear equations. The  Levenberg–Marquardt for nonlinear least-squares is commonly used as a subroutine. Sparse Bundler Adjustment incrementally alters the positions of the cameras to as to minimize the \emph{reprojective error} of the found correspondence points with respect to the images in which they appear. At the end of this process, we have a calibration matrix for each camera, relating the pose of each camera to a global coordinate system.[Snavly, Phototourism] [SBA Lourakis and Argyros 2009]
+Instead, we want to find the \emph{global} optimal camera positions. This process is known as Sparse Bundle Adjustment, and can been seen as minimizing a series of nonlinear equations. The  Levenberg–Marquardt for nonlinear least-squares is commonly used as a subroutine. Sparse Bundler Adjustment incrementally alters the positions of the cameras to as to minimize the \emph{reprojective error} of the found correspondence points with respect to the images in which they appear. At the end of this process, we have a calibration matrix for each camera, relating the pose of each camera to a global coordinate system.\cite{snavely, sba}
 
 \subsection{Dense Reconstruction}
 
-We can now reconstruct the scene from calibrated cameras. We want to find eventually output a scene which is \emph{photo consistent}. Common approaches to this problem include: (1) building up a scene from points whose locations are found by triangulating between images; (2) starting with a volume which encloses the region of interest, and removing \emph{voxels} which are not photoconsistent; and (3) generating stereo depth maps for pairs of images, and then fusing them together.
+We can now reconstruct the scene from calibrated cameras. We want to find eventually output a scene which is \emph{photo consistent}. Common approaches to this problem include: (1) building up a scene from points whose locations are found by triangulating between images; (2) starting with a volume which encloses the region of interest, and removing \emph{voxels} which are not photoconsistent; and (3) generating stereo depth maps for pairs of images, and then fusing them together.\cite{furukawa}
 
 \subsubsection{Point Based Approaches}
 
-% Triangulating points
-% PMVS
-% CMVS?
+Once we have calibrated cameras with a sparse reconstruction, we can search along equipolar lines to find more correspondence points. The real-world locations of these points can be found through triangulation. In Patch-based Multi-View Stereo, these points were further expanded to \emph{patches} which included a color and normal vector.\cite{furukawa}
 
 \subsubsection{Volumetric Approaches}
 
-% Voxels, photoinconsistency
-% Creating bounding box
-  % Convex hull
+Another approach to dense reconstruction is to start with a volume which encloses the region of interest, and iteratively remove small sections (\emph{voxels}) which are not photoconsistent. Constructing the initial visual hull requires segmenting the input images into foreground and background.\cite{spacecarving}
 
 \subsubsection{Stereo Depth Approaches}
 
-% Stereo matching
-% Semi-global matching
-% Graph cuts, dynamic programming
-% Fusing
+A final approach is to build off research in stereo matching. Here, we generate depth maps for all pairs of images with overlapping fields of views. Methods include SemiGlobal Matching, Graph Cuts, and Dynamic Programming.\cite{sgm,taxonomy} These depth maps can be fused to extract the structure of the scene.\cite{fuse}
 
+
+\subsection{Surface Reconstruction}
+% Mesh fitting
+% Poisson Surface reconstruction
+% Iterative Snapping [Furukawa]
+% Marching Squares/Tetrahedrons
+% Voronoi
 
 \section{Our Approach}
-
-% DIAGRAM OF OUR RECONSTRUCTION PIPELINE
 
 \begin{figure*}[t]
   \begin{center}
@@ -112,7 +110,6 @@ We can now reconstruct the scene from calibrated cameras. We want to find eventu
 %CMVS?
 
 %POISSON SURFACE RECONSTRUCTION
-
 
 \begin{figure}[t]
   \begin{center}
