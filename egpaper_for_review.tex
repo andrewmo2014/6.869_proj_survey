@@ -54,7 +54,7 @@ Most current approaches to Multi-View Stereo can be broken down into three steps
 %-------------------------------------------------------------------------
 \subsection{Feature Matching}
 
-The first step in most Multi-View Stereo pipelines is finding correspondence points between images. Once we know these points, we can determine the relative position of the cameras which took the images. 
+The first step in most Multi-View Stereo pipelines is finding correspondence points between images. Once we know these points, we can determine the relative position of the cameras which took the images.
 
 First, we select features of interest in each image. There exist numerous algorithms for selecting these points (SIFT, SURF). The general idea behind most of them is to find a feature which is unique enough such that finding a similar feature in another images indicates with high probability that the two features corresponds to the same object in the scene.\cite{brown}
 
@@ -69,6 +69,15 @@ Instead, we want to find the \emph{global} optimal camera positions. This proces
 \subsection{Dense Reconstruction}
 
 We can now reconstruct the scene from calibrated cameras. We want to find eventually output a scene which is \emph{photo consistent}. Common approaches to this problem include: (1) building up a scene from points whose locations are found by triangulating between images; (2) starting with a volume which encloses the region of interest, and removing \emph{voxels} which are not photoconsistent; and (3) generating stereo depth maps for pairs of images, and then fusing them together.\cite{furukawa}
+
+\begin{figure*}[t]
+  \begin{center}
+    %\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+    \includegraphics[width=\linewidth]{pipeline3.png}
+  \end{center}
+  \caption{Proposed Multi-View pipeline. (A) Source Images with known camera parameters. (B) Bundler Adjustment that utilizes feature matching to create a sparse point cloud. (C) Dense Recontruction that performs clustering to develop a more compact point cloud. (D) Surface Reconstruction adds a mesh to the points. (E) Applying colored textures on the mesh results in a realistic simulated model.}
+  \label{fig:short}
+\end{figure*}
 
 \subsubsection{Point Based Approaches}
 
@@ -102,54 +111,84 @@ A final approach is to build off research in stereo matching. Here, we generate 
 \end{figure*}
 
 
+\section{Surface Reconstruction}
+After producing a dense reconstruction composed of multiple vertices, the next step is to apply a surface or mesh.  Common approaches to undergo surface reconstruction include (1) iteratively using combinatorial structures that interpolate the points; (2) define implicit functions that fit the all points (globally) or a subset of the points (locally); and (3) provide additional methods that augment global/local fitting or utilize segmentation.
 
-%BUNDLER
 
-%PMVS
+\subsection{Combinatorial Structures}
+Several approaches are based on schemes that typically create a triangle mesh that interpolates all or most of the points.  Methods include Delaunay Triangulation, $\alpha$-shapes, or Voronoi diagrams [0].  Extentions on these algorithms have been made to include theoretical gaurantee, such as PowerCrust [4].  If the data is noisy, the resulting surface can be jagged and usaully requires post-processing to refit or smooth the points.
 
-%CMVS?
+\subsection{Implicit Functions}
+Global fitting techniques commonly define the implicit function as the sum of radial basis functions (RBFs) centered at the points.  Ideal RBFs, known as \textit{polyharmonics}, often result in non-sparse solutions.  The Multipole Method and The Marching Cube Algorithm are examples of extracting surfaces from the RBF function [0].
 
-%POISSON SURFACE RECONSTRUCTION
+Local fitting methods consider subsets of nearby points at a time.  The main idea is to estimate tangent planes and define the implicit function to be the distance from this plane to the closest point. Moving Least Square (MLS) is a common approach to blend nearby points together [0].  Another approach includes subdividing the space with an adaptive octree [0].  This often involves multi-level paritioning and heursitics.
 
-\begin{figure}[t]
-  \begin{center}
-    % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-    \includegraphics[width=0.8\linewidth]{temple0001.png}
-  \end{center}
-  \caption{Sample input image (one of 312)}
-  \label{fig:long}
-  \label{fig:onecol}
-\end{figure}
+\subsection{Other Methods}
+Addtional methods for surface reconstruction usually combine the benefits of both the global and local fitting schemes.  \textit{Poisson Surface Reconstruction} converts a set of oriented points into a triangulated mesh model [0].  No heuristics are needed to form local neighborhoods, patch types, etc.  Also, the basis functions are assoicated with ambient space rather than data points.
 
-\begin{figure}[t]
-  \begin{center}
-    % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-    \includegraphics[width=0.8\linewidth]{sparse.png}
-  \end{center}
-  \caption{Sparse Reconstruction}
-  \label{fig:long}
-  \label{fig:onecol}
-\end{figure}
+\textit{Iterative Snapping} utilizes segmentation information to initailize a mesh [0].  A visual hull model is initially generated and then iteratively deformed towards reconstructed patches.  Additional algorithms for surface recontructions usually extend the above methods.
 
-\begin{figure}[t]
-\begin{center}
-% \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-\includegraphics[width=0.8\linewidth]{patches.png}
-\end{center}
-\caption{Dense Patch reconstruction}
-\label{fig:long}
-\label{fig:onecol}
-\end{figure}
+% Mesh fitting
+% Poisson Surface reconstruction
+% Iterative Snapping [Furukawa]
+% Marching Squares/Tetrahedrons
+% Voronoi
 
-\begin{figure}[t]
-  \begin{center}
-    % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-    \includegraphics[width=0.8\linewidth]{mesh.png}
-  \end{center}
-  \caption{Poisson Surface Reconstruction to fit mesh to patches}
-  \label{fig:long}
-  \label{fig:onecol}
-\end{figure}
+\section{Our Approach}
+There are various algorithms and tools in the computer vision community designed for Multi-View Stereo.  Our approach consists of utilizing point-based methods to develop a densely reconstructed point cloud.  From there, we will compare various mesh-fitting surface techniques and potentially implement our own, such as Poisson Surface Reconstruction.  We plan to visualize our results from each step.
+
+\subsection{Proposed Pipeline}
+Figure 1 summarizes our pipelined approach of displaying a 3D model from 2D images.  After extracting features and camera calibration parameters from imported source images, point cloud reconstructions can be created from Structure-from-Motion (SfM) tools.  We will utilize robust computer vision packages such as Bundler and CMVS/PMVS [0].  As a result, we will attempt to compare surface reconstruction techniques that will be used to fit a detailed mesh to the point cloud.  3D editing software tools such as MeshLab and Blender[0] can assist in further configuration and production of desired meshes/textures.  These can be visualized in the Unity3D game engine, which supports Oculus Rift OVR integration.
+
+
+\subsection{Visualization}
+With a complete 3D reconstruction, the objective is to then use innovative technology to view and interact with the final scene/model. The Unity3D Game Engine is the utlimate tool for video game development, architectual visualizations, and interactive media installations [0].  By simulating a virtualized environment, the user can continue to explore/examine the results.  As an extension, Unity3D has a fully integrated plugin for the Oculus Rift.  This developemnt tool is an augmented reality head-mounted display that creates a stereoscopic 3D view.  The rift in conjunction with the game engine can produce an immersive setting that enhances the user experience.
+
+\subsection{Conclusion/Motivation}
+There are many applications to Multi-View Stereo.  They include (but are not limited to) reverse engineering, industrial design, performance analysis and simulations, realistic virtual environments, and medical imaging.  Converting a series of 2D images to a 3D model can be a challenging process.  However, feature matching and dense/surface reconstruction are techniques that produce appealing results.  Visualizing our results using enhanced 3D tools such as Unity3D and Oculus Rift will assist in understanding and recognizing the 3-Dimensional product.
+
+
+
+
+% \begin{figure}[t]
+%   \begin{center}
+%     % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+%     \includegraphics[width=0.8\linewidth]{temple0001.png}
+%   \end{center}
+%   \caption{Sample input image (one of 312)}
+%   \label{fig:long}
+%   \label{fig:onecol}
+% \end{figure}
+
+% \begin{figure}[t]
+%   \begin{center}
+%     % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+%     \includegraphics[width=0.8\linewidth]{sparse.png}
+%   \end{center}
+%   \caption{Sparse Reconstruction}
+%   \label{fig:long}
+%   \label{fig:onecol}
+% \end{figure}
+
+% \begin{figure}[t]
+% \begin{center}
+% % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+% \includegraphics[width=0.8\linewidth]{patches.png}
+% \end{center}
+% \caption{Dense Patch reconstruction}
+% \label{fig:long}
+% \label{fig:onecol}
+% \end{figure}
+
+% \begin{figure}[t]
+%   \begin{center}
+%     % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+%     \includegraphics[width=0.8\linewidth]{mesh.png}
+%   \end{center}
+%   \caption{Poisson Surface Reconstruction to fit mesh to patches}
+%   \label{fig:long}
+%   \label{fig:onecol}
+% \end{figure}
 
 
 
