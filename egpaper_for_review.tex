@@ -64,7 +64,7 @@ Once features have been extracted from each image, pairwise matches must be foun
 
 Now that we have correspondence points, we want to compute a homography relating one image to another. If we only wanted to find the orientation of one camera relative to another, we could use RANSAC to fit a homography (with the Discrete Linear Transform to make it linear).\cite{ransac} However, if we only found the optimal pairwise relative positions, we would not be guaranteed that they would be consistent.
 
-Instead, we want to find the \emph{global} optimal camera positions. This process is known as Sparse Bundle Adjustment, and can been seen as minimizing a series of nonlinear equations. The  Levenberg–Marquardt for nonlinear least-squares is commonly used as a subroutine. Sparse Bundler Adjustment incrementally alters the positions of the cameras to as to minimize the \emph{reprojective error} of the found correspondence points with respect to the images in which they appear. At the end of this process, we have a calibration matrix for each camera, relating the pose of each camera to a global coordinate system.\cite{snavely, sba}
+Instead, we want to find the \emph{global} optimal camera positions. This process is known as Sparse Bundle Adjustment, and can been seen as minimizing a series of nonlinear equations. The  Levenberg Marquardt Algorithm for nonlinear least-squares is commonly used as a subroutine. Sparse Bundler Adjustment incrementally alters the positions of the cameras to as to minimize the \emph{reprojective error} of the found correspondence points with respect to the images in which they appear. At the end of this process, we have a calibration matrix for each camera, relating the pose of each camera to a global coordinate system.\cite{snavely, sba}
 
 \subsection{Dense Reconstruction}
 
@@ -97,7 +97,7 @@ A final approach is to build off research in stereo matching. Here, we generate 
     %\fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
     \includegraphics[width=\linewidth]{pipeline.png}
   \end{center}
-  \caption{Proposed Multi-View pre-processing and visualization pipeline.  After extracting features and camera calibration parameters from imported source images, point cloud reconstructions can be created from robust computer vision packages such as Bundler and CMVS/PMVS.  As a result, 3D editing software tools such as MeshLab and Blender can assist in further configuration and production of detailed meshes/textures.  These can be visualized in the Unity3D game engine, which supports Oculus Rift OVR integration.}
+  \caption{Proposed Multi-View pre-processing and visualization pipeline, run on the Temple dataset.\cite{middlebury}  After extracting features and camera calibration parameters from imported source images, point cloud reconstructions can be created from robust computer vision packages such as Bundler and CMVS/PMVS.  As a result, 3D editing software tools such as MeshLab and Blender can assist in further configuration and production of detailed meshes/textures.  These can be visualized in the Unity3D game engine, which supports Oculus Rift OVR integration.}
   \label{fig:short}
 \end{figure*}
 
