@@ -92,17 +92,8 @@ Another approach to dense reconstruction is to start with a volume which enclose
 A final approach is to build off research in stereo matching. Here, we generate depth maps for all pairs of images with overlapping fields of views. Methods include SemiGlobal Matching, Graph Cuts, and Dynamic Programming.\cite{sgm,taxonomy} These depth maps can be fused to extract the structure of the scene.\cite{fuse}
 
 
+
 \subsection{Surface Reconstruction}
-% Mesh fitting
-% Poisson Surface reconstruction
-% Iterative Snapping [Furukawa]
-% Marching Squares/Tetrahedrons
-% Voronoi
-
-\section{Our Approach}
-
-
-\section{Surface Reconstruction}
 After producing a dense reconstruction composed of multiple vertices, the next step is to apply a surface or mesh.  A mesh can be modeled as parametric surfaces.  This can be viewed as an optimization problem to minimize the overall \textit{energy} of the mesh, that aims at a close fit and compact final representation.
 
 
@@ -113,68 +104,22 @@ After producing a dense reconstruction composed of multiple vertices, the next s
 % Voronoi
 
 \section{Our Approach}
-There are various algorithms and tools in the computer vision community designed for Multi-View Stereo.  Our approach consists of utilizing point-based methods to develop a densely reconstructed point cloud.  From there, we will compare various mesh-fitting surface techniques and potentially implement our own, such as Poisson Surface Reconstruction.  We plan to visualize our results from each step.
 
-\subsection{Proposed Pipeline}
-Figure 1 summarizes our pipelined approach of displaying a 3D model from 2D images.  After extracting features and camera calibration parameters from imported source images, point cloud reconstructions can be created from Structure-from-Motion (SfM) tools.  We will utilize robust computer vision packages such as Bundler and CMVS/PMVS [0].  As a result, we will attempt to compare surface reconstruction techniques that will be used to fit a detailed mesh to the point cloud.  3D editing software tools such as MeshLab and Blender[0] can assist in further configuration and production of desired meshes/textures.  These can be visualized in the Unity3D game engine, which supports Oculus Rift OVR integration.
+We will construct a pipeline which uses point-based methods to develop a densely reconstructed point cloud. From there, we will compare various mesh-fitting surface techniques.  We plan to compare the results quantitatively evaluate them qualitatively, using the Oculus Rift.
 
 
 \subsection{Visualization}
-With a complete 3D reconstruction, the objective is to then use innovative technology to view and interact with the final scene/model. The Unity3D Game Engine is the utlimate tool for video game development, architectual visualizations, and interactive media installations [0].  By simulating a virtualized environment, the user can continue to explore/examine the results.  As an extension, Unity3D has a fully integrated plugin for the Oculus Rift.  This developemnt tool is an augmented reality head-mounted display that creates a stereoscopic 3D view.  The rift in conjunction with the game engine can produce an immersive setting that enhances the user experience.
+With a 3D reconstruction, it makes sense to try to view it in three dimensions. We do this using the Oculus Rift, a head-mounted stereoscopic display. We will render the scene in a game engine (Unity3D CITATION), which will allow users to move around the scene.
 
-\subsection{Conclusion/Motivation}
-There are many applications to Multi-View Stereo.  They include (but are not limited to) reverse engineering, industrial design, performance analysis and simulations, realistic virtual environments, and medical imaging.  Converting a series of 2D images to a 3D model can be a challenging process.  However, feature matching and dense/surface reconstruction are techniques that produce appealing results.  Visualizing our results using enhanced 3D tools such as Unity3D and Oculus Rift will assist in understanding and recognizing the 3-Dimensional product.
-
-
-
-
-% \begin{figure}[t]
-%   \begin{center}
-%     % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-%     \includegraphics[width=0.8\linewidth]{temple0001.png}
-%   \end{center}
-%   \caption{Sample input image (one of 312)}
-%   \label{fig:long}
-%   \label{fig:onecol}
-% \end{figure}
-
-% \begin{figure}[t]
-%   \begin{center}
-%     % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-%     \includegraphics[width=0.8\linewidth]{sparse.png}
-%   \end{center}
-%   \caption{Sparse Reconstruction}
-%   \label{fig:long}
-%   \label{fig:onecol}
-% \end{figure}
-
-% \begin{figure}[t]
-% \begin{center}
-% % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-% \includegraphics[width=0.8\linewidth]{patches.png}
-% \end{center}
-% \caption{Dense Patch reconstruction}
-% \label{fig:long}
-% \label{fig:onecol}
-% \end{figure}
-
-% \begin{figure}[t]
-%   \begin{center}
-%     % \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
-%     \includegraphics[width=0.8\linewidth]{mesh.png}
-%   \end{center}
-%   \caption{Poisson Surface Reconstruction to fit mesh to patches}
-%   \label{fig:long}
-%   \label{fig:onecol}
-% \end{figure}
-
+\subsection{Conclusion}
+There are many applications to Multi-View Stereo. We propose a pipeline which transforms a set of images into a model of the scene.  Additionally, we propose to visualize our results using an Oculus Rift, which will shed light on the reconstruction process.
 
 
 % WE NEED TO ADD OUR SOURCES
 
 {\small
-\bibliographystyle{ieee}
-\bibliography{egbib}
+  \bibliographystyle{ieee}
+  \bibliography{egbib}
 }
 
 \end{document}
