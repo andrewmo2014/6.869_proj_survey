@@ -1,4 +1,4 @@
-\begin{thebibliography}{10}\itemsep=-1pt
+\begin{thebibliography}{1}\itemsep=-1pt
 
 \bibitem{brown}
 M.~Brown and D.~G. Lowe.
@@ -45,13 +45,6 @@ D.~Scharstein and R.~Szeliski.
 \newblock A taxonomy and evaluation of dense two-frame stereo correspondence
   algorithms.
 \newblock {\em International journal of computer vision}, 47(1-3):7--42, 2002.
-
-\bibitem{middlebury}
-S.~M. Seitz, B.~Curless, J.~Diebel, D.~Scharstein, and R.~Szeliski.
-\newblock A comparison and evaluation of multi-view stereo reconstruction
-  algorithms.
-\newblock In {\em Computer vision and pattern recognition, 2006 IEEE Computer
-  Society Conference on}, volume~1, pages 519--528. IEEE, 2006.
 
 \bibitem{snavely}
 N.~Snavely, S.~M. Seitz, and R.~Szeliski.
