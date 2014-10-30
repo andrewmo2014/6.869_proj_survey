@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  29 OCT 2014 20:44
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.5.30)  30 OCT 2014 07:22
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -383,45 +383,49 @@ File: ot1phv.fd 2001/06/04 scalable font definitions for OT1/phv.
 ) [1{/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
-] [2 <./pipeline3.png>] (./egpaper_for_review.bbl (./egpaper_for_review.brf)
+]
+(./egpaper_for_review.bbl (./egpaper_for_review.brf)
 \tf@brf=\write3
 \openout3 = `egpaper_for_review.brf'.
 
-)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 180.
- [3
+LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 7.
+ [2 <./pipeline3.png>])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 140.
+
+[3
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 180.
-
-(./egpaper_for_review.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 180.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 180.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 140.
+ (./egpaper_for_review.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 140.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 140.
 Package rerunfilecheck Info: File `egpaper_for_review.brf' has not changed.
 (rerunfilecheck)             Checksum: A05217A91BE45D55B7ADA04C7746C10D;451.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 180.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 140.
  ) 
 Here is how much of TeX's memory you used:
- 6518 strings out of 493315
- 94178 string characters out of 6137904
+ 6529 strings out of 493315
+ 94292 string characters out of 6137904
  187022 words of memory out of 5000000
- 9841 multiletter control sequences out of 15000+600000
- 30414 words of font info for 65 fonts, out of 8000000 for 9000
+ 9849 multiletter control sequences out of 15000+600000
+ 32478 words of font info for 72 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
- 34i,9n,26p,745b,324s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,9n,26p,700b,472s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2013/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
-exlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texl
-ive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texli
-ve/2013/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/t
-exlive/2013/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/
-2013/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2013/te
-xmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2013/texmf-dist/f
-onts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1
-/urw/times/utmri8a.pfb>
-Output written on egpaper_for_review.pdf (3 pages, 262159 bytes).
+exlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/te
+xlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texli
+ve/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texliv
+e/2013/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/te
+xlive/2013/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2
+013/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2013/tex
+mf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2013/texmf-dist/fo
+nts/type1/urw/times/utmr8a.pfb></usr/local/texlive/2013/texmf-dist/fonts/type1/
+urw/times/utmri8a.pfb>
+Output written on egpaper_for_review.pdf (3 pages, 268845 bytes).
 PDF statistics:
- 108 PDF objects out of 1000 (max. 8388607)
- 92 compressed objects within 1 object stream
- 29 named destinations out of 1000 (max. 500000)
+ 111 PDF objects out of 1000 (max. 8388607)
+ 94 compressed objects within 1 object stream
+ 28 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 

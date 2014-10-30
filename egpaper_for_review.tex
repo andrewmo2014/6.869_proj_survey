@@ -91,11 +91,27 @@ Another approach to dense reconstruction is to start with a volume which enclose
 
 A final approach is to build off research in stereo matching. Here, we generate depth maps for all pairs of images with overlapping fields of views. Methods include SemiGlobal Matching, Graph Cuts, and Dynamic Programming.\cite{sgm,taxonomy} These depth maps can be fused to extract the structure of the scene.\cite{fuse}
 
+% \subsection{Surface Reconstruction}
+% Mesh fitting
+% Poisson Surface reconstruction
+% Iterative Snapping [Furukawa]
+% Marching Squares/Tetrahedrons
+% Voronoi
 
+\section{Surface Reconstruction}
+We next want to reconstruct the surface given a finite set of scattered points.  This can be viewed as an optimization problem in which the overall goal is to minimize a global \textit{energy} function characterized by the constraints of the point cloud [meshoptimization].  Two common approaches to solve this problem include (1) interpolating the points with computational geometry and (2) construct implicit functions to fit the data.
 
-\subsection{Surface Reconstruction}
-After producing a dense reconstruction composed of multiple vertices, the next step is to apply a surface or mesh.  A mesh can be modeled as parametric surfaces.  This can be viewed as an optimization problem to minimize the overall \textit{energy} of the mesh, that aims at a close fit and compact final representation.
+\subsection{ Computational Geometry }
+In this approach, the point cloud is partitioned into sections and geometric estimations are calculated at each point. For example, each point can be treated as a tangent plane and neighboring points are then projected onto this plane, giving an estimation of the surface point[cite].  This utilizes methods such as Delanunay triangles, $\alpha$-shapes [cite]. 
 
+\subsection{ Function Fitting }
+A more rigorous approach is to contruct implicit (inside-outside) functions that 
+
+One example is to create a triangle mesh where vertices behave as oriented points.  Finding the interaction among the points and smoothness contrantins can be obtained through finite-element analysis.    Convert the point cloud to a signed inside-outside distance function  or interpolating a charcatersitci function using radial basis functions.  Moving Least Squares (MLS) and local sphere fitting.
+
+Implicit functions can be used to represent a 3D shape.    
+
+\textit{Poisson Surface Reconstruction} uses a smoothed inside-outside function where the gradients lie along the normals. Values are updated as the surface evolves to fit Multi-View Stereo photoconsistencey. 
 
 % Mesh fitting
 % Poisson Surface reconstruction
@@ -105,14 +121,13 @@ After producing a dense reconstruction composed of multiple vertices, the next s
 
 \section{Our Approach}
 
-We will construct a pipeline which uses point-based methods to develop a densely reconstructed point cloud. From there, we will compare various mesh-fitting surface techniques.  We plan to compare the results quantitatively evaluate them qualitatively, using the Oculus Rift.
-
+We will construct a pipeline which uses point-based methods to develop a densely reconstructed point cloud. From there, we will compare various mesh-fitting surface techniques.  We plan to compare the results quantitatively evaluate them qualitatively, using the Oculus Rift.  Figure 1 summarizes the overall reconstruction process.
 
 \subsection{Visualization}
 With a 3D reconstruction, it makes sense to try to view it in three dimensions. We do this using the Oculus Rift, a head-mounted stereoscopic display. We will render the scene in a game engine (Unity3D CITATION), which will allow users to move around the scene.
 
 \subsection{Conclusion}
-There are many applications to Multi-View Stereo. We propose a pipeline which transforms a set of images into a model of the scene.  Additionally, we propose to visualize our results using an Oculus Rift, which will shed light on the reconstruction process.
+There are many applications and approaches to Multi-View Stereo. We propose a pipeline which transforms a set of images into a model of the scene.  Additionally, we propose to visualize our results using an Oculus Rift, which will shed light on the reconstruction process.
 
 
 % WE NEED TO ADD OUR SOURCES
