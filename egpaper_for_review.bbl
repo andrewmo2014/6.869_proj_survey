@@ -1,5 +1,9 @@
 \begin{thebibliography}{10}\itemsep=-1pt
 
+\bibitem{unity}
+Unity3d - game engine.
+\newblock \url{http://www.unity3d.com}.
+
 \bibitem{brown}
 M.~Brown and D.~G. Lowe.
 \newblock Automatic panoramic image stitching using invariant features.
@@ -29,6 +33,17 @@ H.~Hirschmuller.
 \newblock {\em Pattern Analysis and Machine Intelligence, IEEE Transactions
   on}, 30(2):328--341, 2008.
 
+\bibitem{hoppe1992surface}
+H.~Hoppe, T.~DeRose, T.~Duchamp, J.~McDonald, and W.~Stuetzle.
+\newblock {\em Surface reconstruction from unorganized points}, volume~26.
+\newblock ACM, 1992.
+
+\bibitem{mesh_opt}
+H.~Hoppe, T.~Derose, T.~Duchamp, J.~McDonald, and W.~Stuetzle.
+\newblock Mesh optimization.
+\newblock In {\em Proceedings of the 20th annual conference on Computer
+  Graphics and interactive technologies}. ACM, 1993.
+
 \bibitem{poisson}
 M.~Kazhdan, B.~Matthew, and H.~Hugues.
 \newblock Poisson surface reconstruction.
@@ -55,5 +70,16 @@ D.~Scharstein and R.~Szeliski.
 N.~Snavely, S.~M. Seitz, and R.~Szeliski.
 \newblock Photo tourism: exploring photo collections in 3d.
 \newblock {\em ACM transactions on graphics (TOG)}, 25(3):835--846, 2006.
+
+\bibitem{szeliski2010computer}
+R.~Szeliski.
+\newblock {\em Computer vision: algorithms and applications}.
+\newblock Springer, 2010.
+
+\bibitem{surface_review}
+R.~Tang, S.~Halim, and M.~Zulkepli.
+\newblock Surface reconstruction algorithms: Review and comparison.
+\newblock In {\em Proceedings of the 20th annual conference on Computer
+  Graphics and interactive technologies}. ISDE, 2013.
 
 \end{thebibliography}

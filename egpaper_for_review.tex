@@ -99,15 +99,15 @@ A final approach is to build off research in stereo matching. Here, we generate 
 % Voronoi
 
 \section{Surface Reconstruction}
-We next want to reconstruct the surface given a finite set of scattered points.  This can be viewed as an optimization problem in which the overall goal is to minimize a global \textit{energy} function characterized by the constraints of the point cloud [meshoptimization].  Two common approaches to solve this problem include (1) interpolating the points with computational geometry and (2) constructing implicit functions to fit the data.
+We next want to reconstruct the surface given a finite set of scattered points.  This can be viewed as an optimization problem in which the overall goal is to minimize a global \textit{energy} function characterized by the constraints of the point cloud. \cite{mesh_opt}  Two common approaches to solve this problem include (1) interpolating the points with computational geometry and (2) constructing implicit functions to fit the data.
 
 \subsection{ Geometric Estimation }
-In this approach, the point cloud is partitioned into sections and geometric estimations are calculated at each point. For example, each point can be treated as a tangent plane and neighboring points are then projected onto this plane, giving an estimation of the surface point[cite].  This utilizes methods such as Delanunay triangles, $\alpha$-shapes [cite]. 
+In this approach, the point cloud is partitioned into sections and geometric estimations are calculated at each point. For example, each point can be treated as a tangent plane and neighboring points are then projected onto this plane, giving an estimation of the surface point.\cite{surface_review, hoppe1992surface}  This utilizes methods such as Delanunay triangles, $\alpha$-shapes. \cite{surface_review, poisson} 
 
 \subsection{ Function Fitting}
-A more rigorous approach is to fit implicit (inside-outside) functions onto the point cloud.  This can be based on signed distance or centered radial basis functions (RBFs).\cite{poisson}  Improvements can be made to handle irregularities and outliers with the use of Moving Least Squares (MLS)[book].  Finding a continuous function in which the points approximately lie on the zero set determines the boundary for the mesh.  One way this can be completed is by the Marching Cubes Algorithm [cite].
+A more rigorous approach is to fit implicit (inside-outside) functions onto the point cloud.  This can be based on signed distance or centered radial basis functions (RBFs).\cite{poisson}  Improvements can be made to handle irregularities and outliers with the use of Moving Least Squares (MLS).\cite{szeliski2010computer}  Finding a continuous function in which the points approximately lie on the zero set determines the boundary for the mesh.  One way this can be completed is by the Marching Cubes Algorithm.\cite{hoppe1992surface}
 
-As an example, \textit{Poisson Surface Reconstruction} utilizes the function fitting approach.  An inside-outside function is defined by gradients determined from the point normals.\cite{poisson}  When undergoing surface reconstruction, it is important to ensure photoconsistencey is maintained. 
+As an example, \textit{Poisson Surface Reconstruction} utilizes the function fitting approach.  An inside-outside function is defined by gradients determined from the point normals.\cite{poisson}  In general, when undergoing surface reconstruction, it is important to ensure photoconsistencey is maintained. 
 
 % Mesh fitting
 % Poisson Surface reconstruction
@@ -120,7 +120,7 @@ As an example, \textit{Poisson Surface Reconstruction} utilizes the function fit
 We will construct a pipeline which uses point-based methods to develop a densely reconstructed point cloud. From there, we will compare various mesh-fitting surface techniques.  We plan to compare the results quantitatively evaluate them qualitatively, using the Oculus Rift.  Figure 1 summarizes the overall reconstruction process.
 
 \subsection{Visualization}
-With a 3D reconstruction, it makes sense to try to view it in three dimensions. We do this using the Oculus Rift, a head-mounted stereoscopic display. We will render the scene in a game engine (Unity3D CITATION), which will allow users to move around the scene.
+With a 3D reconstruction, it makes sense to try to view it in three dimensions. We do this using the Oculus Rift, a head-mounted stereoscopic display. We will render the scene in a game engine \cite{unity}, which will allow users to move around the scene.
 
 \subsection{Conclusion}
 There are many applications and approaches to Multi-View Stereo. We propose a pipeline which transforms a set of images into a model of the scene.  Additionally, we propose to visualize our results using an Oculus Rift, which will shed light on the reconstruction process.
