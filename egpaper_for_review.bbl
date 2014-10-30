@@ -1,4 +1,4 @@
-\begin{thebibliography}{1}\itemsep=-1pt
+\begin{thebibliography}{10}\itemsep=-1pt
 
 \bibitem{brown}
 M.~Brown and D.~G. Lowe.
@@ -28,6 +28,11 @@ H.~Hirschmuller.
 \newblock Stereo processing by semiglobal matching and mutual information.
 \newblock {\em Pattern Analysis and Machine Intelligence, IEEE Transactions
   on}, 30(2):328--341, 2008.
+
+\bibitem{poisson}
+M.~Kazhdan, B.~Matthew, and H.~Hugues.
+\newblock Poisson surface reconstruction.
+\newblock In {\em Geometry Processing, 2006 Eurographics Symposium on}.
 
 \bibitem{spacecarving}
 K.~N. Kutulakos and S.~M. Seitz.

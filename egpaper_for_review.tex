@@ -105,9 +105,9 @@ We next want to reconstruct the surface given a finite set of scattered points. 
 In this approach, the point cloud is partitioned into sections and geometric estimations are calculated at each point. For example, each point can be treated as a tangent plane and neighboring points are then projected onto this plane, giving an estimation of the surface point[cite].  This utilizes methods such as Delanunay triangles, $\alpha$-shapes [cite]. 
 
 \subsection{ Function Fitting}
-A more rigorous approach is to fit implicit (inside-outside) functions onto the point cloud.  This can be based on signed distance or centered radial basis functions (RBFs) [poisson].  Improvements can be made to handle irregularities and outliers with the use of Moving Least Squares (MLS)[book].  Finding a continuous function in which the points approximately lie on the zero set determines the boundary for the mesh.  One way this can be completed is by the Marching Cubes Algorithm [cite].
+A more rigorous approach is to fit implicit (inside-outside) functions onto the point cloud.  This can be based on signed distance or centered radial basis functions (RBFs).\cite{poisson}  Improvements can be made to handle irregularities and outliers with the use of Moving Least Squares (MLS)[book].  Finding a continuous function in which the points approximately lie on the zero set determines the boundary for the mesh.  One way this can be completed is by the Marching Cubes Algorithm [cite].
 
-As an example, \textit{Poisson Surface Reconstruction} utilizes the function fitting approach.  An inside-outside function is defined by gradients determined from the point normals [poisson].  When undergoing surface reconstruction, it is important to ensure photoconsistencey is maintained. 
+As an example, \textit{Poisson Surface Reconstruction} utilizes the function fitting approach.  An inside-outside function is defined by gradients determined from the point normals.\cite{poisson}  When undergoing surface reconstruction, it is important to ensure photoconsistencey is maintained. 
 
 % Mesh fitting
 % Poisson Surface reconstruction
