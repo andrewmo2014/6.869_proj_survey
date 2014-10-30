@@ -112,21 +112,8 @@ A final approach is to build off research in stereo matching. Here, we generate 
 
 
 \section{Surface Reconstruction}
-After producing a dense reconstruction composed of multiple vertices, the next step is to apply a surface or mesh.  Common approaches to undergo surface reconstruction include (1) iteratively using combinatorial structures that interpolate the points; (2) define implicit functions that fit the all points (globally) or a subset of the points (locally); and (3) provide additional methods that augment global/local fitting or utilize segmentation.
+After producing a dense reconstruction composed of multiple vertices, the next step is to apply a surface or mesh.  A mesh can be modeled as parametric surfaces.  This can be viewed as an optimization problem to minimize the overall \textit{energy} of the mesh, that aims at a close fit and compact final representation.
 
-
-\subsection{Combinatorial Structures}
-Several approaches are based on schemes that typically create a triangle mesh that interpolates all or most of the points.  Methods include Delaunay Triangulation, $\alpha$-shapes, or Voronoi diagrams [0].  Extentions on these algorithms have been made to include theoretical gaurantee, such as PowerCrust [4].  If the data is noisy, the resulting surface can be jagged and usaully requires post-processing to refit or smooth the points.
-
-\subsection{Implicit Functions}
-Global fitting techniques commonly define the implicit function as the sum of radial basis functions (RBFs) centered at the points.  Ideal RBFs, known as \textit{polyharmonics}, often result in non-sparse solutions.  The Multipole Method and The Marching Cube Algorithm are examples of extracting surfaces from the RBF function [0].
-
-Local fitting methods consider subsets of nearby points at a time.  The main idea is to estimate tangent planes and define the implicit function to be the distance from this plane to the closest point. Moving Least Square (MLS) is a common approach to blend nearby points together [0].  Another approach includes subdividing the space with an adaptive octree [0].  This often involves multi-level paritioning and heursitics.
-
-\subsection{Other Methods}
-Addtional methods for surface reconstruction usually combine the benefits of both the global and local fitting schemes.  \textit{Poisson Surface Reconstruction} converts a set of oriented points into a triangulated mesh model [0].  No heuristics are needed to form local neighborhoods, patch types, etc.  Also, the basis functions are assoicated with ambient space rather than data points.
-
-\textit{Iterative Snapping} utilizes segmentation information to initailize a mesh [0].  A visual hull model is initially generated and then iteratively deformed towards reconstructed patches.  Additional algorithms for surface recontructions usually extend the above methods.
 
 % Mesh fitting
 % Poisson Surface reconstruction
