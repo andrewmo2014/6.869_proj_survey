@@ -14,7 +14,7 @@
 % run, let it finish, and you should be clear).
 \usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
 
-\cvprfinalcopy % *** Uncomment this line for the final submission
+%\cvprfinalcopy % *** Uncomment this line for the final submission
 
 \def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
 \def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
@@ -98,7 +98,7 @@ A final approach, builds off research in stereo matching. Here, we generate dept
 We next want to reconstruct the surface from a finite set of scattered points.  This can be viewed as an optimization problem in which the overall goal is to minimize a global energy function. This function often enforces a smoothness constraint and penalizes the distance between points and the mesh.\cite{mesh_opt}  Two common approaches to solve this problem include (1) interpolating the points with computational geometry and (2) constructing implicit functions to fit the data.
 
 \subsubsection{ Geometric Estimation }
-In this approach, the point cloud is partitioned into sections and geometric estimations are calculated at each point. For example, each point can be treated as a tangent plane and neighboring points are then projected onto this plane, giving an estimation of the surface point.\cite{surface_review, hoppe1992surface}  This utilizes methods such as Delanunay triangles, $\alpha$-shapes. \cite{surface_review, poisson} 
+In this approach, the point cloud is partitioned into sections and geometric estimations are calculated at each point. For example, each point can be treated as a tangent plane and neighboring points are then projected onto this plane, giving an estimation of the surface point.\cite{surface_review, hoppe1992surface}  This utilizes methods such as Delaunay triangles, $\alpha$-shapes. \cite{surface_review, poisson} 
 
 \subsubsection{ Function Fitting}
 A more rigorous approach is to fit implicit (inside-outside) functions onto the point cloud.  This can be based on signed distance or centered radial basis functions (RBFs).\cite{poisson}  Improvements can be made to handle irregularities and outliers with the use of Moving Least Squares (MLS).\cite{szeliski2010computer}  Finding a continuous function in which the points approximately lie on the zero set determines the smoothed boundary for the mesh.  One way this can be completed is by the Marching Cubes Algorithm.\cite{hoppe1992surface}

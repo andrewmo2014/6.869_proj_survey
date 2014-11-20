@@ -1,13 +1,13 @@
 # Fdb version 3
-["bibtex egpaper_for_review"] 1414673233 "egpaper_for_review.aux" "egpaper_for_review.bbl" "egpaper_for_review" 1414675200
+["bibtex egpaper_for_review"] 1414685251 "egpaper_for_review.aux" "egpaper_for_review.bbl" "egpaper_for_review" 1414686376
   "./ieee.bst" 1381513458 19623 f9cd22458ca68af2567100f1aed905e8 ""
   "egbib.bib" 1414673214 4261 9994b08ac23a7fcbf418c14769ca3d9e ""
-  "egpaper_for_review.aux" 1414675199 5134 808775b5ff7bde10fdf216ae1d139070 ""
+  "egpaper_for_review.aux" 1414686375 5038 140df91aff6f7794b0b7b69aacca1c2b ""
   "egpaper_for_review.bcf" 0 -1 0 ""
   (generated)
   "egpaper_for_review.blg"
   "egpaper_for_review.bbl"
-["pdflatex"] 1414675198 "egpaper_for_review.tex" "egpaper_for_review.pdf" "egpaper_for_review" 1414675200
+["pdflatex"] 1414686374 "egpaper_for_review.tex" "egpaper_for_review.pdf" "egpaper_for_review" 1414686376
   "/usr/local/texlive/2013/texmf-dist/tex/context/base/supp-pdf.mkii" 1337017135 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/local/texlive/2013/texmf-dist/tex/generic/ifxetex/ifxetex.sty" 1284331290 1458 43ab4710dc82f3edeabecd0d099626b2 ""
   "/usr/local/texlive/2013/texmf-dist/tex/generic/oberdiek/gettitlestring.sty" 1303254447 8237 52810bdb4db2270e717422560a104aea ""
@@ -55,14 +55,14 @@
   "/usr/local/texlive/2013/texmf-dist/tex/latex/url/url.sty" 1264379145 21932 e3a9cf32ee9b853b42be14c2f25b873c ""
   "cvpr.sty" 1381513712 8185 796f568e727fc66dae196368ca9e0e61 ""
   "cvpr_eso.sty" 1381513458 3878 6aa7c08ff2621006e0603349e40a30a8 ""
-  "egpaper_for_review.aux" 1414675199 5134 808775b5ff7bde10fdf216ae1d139070 ""
-  "egpaper_for_review.bbl" 1414673233 2980 d339944237a6e7aa500cdf371c37f495 "bibtex egpaper_for_review"
-  "egpaper_for_review.brf" 1414675199 874 7084875140405cfa37cc248a71cf94a2 ""
-  "egpaper_for_review.tex" 1414675198 10013 0e678c560992f8fd11152158f8a021f1 ""
+  "egpaper_for_review.aux" 1414686375 5038 140df91aff6f7794b0b7b69aacca1c2b ""
+  "egpaper_for_review.bbl" 1414685251 2980 d339944237a6e7aa500cdf371c37f495 "bibtex egpaper_for_review"
+  "egpaper_for_review.brf" 1414686375 923 11feacb769cd56a5996b026413d013a3 ""
+  "egpaper_for_review.tex" 1414686374 9752 f56ce81cf80772b463fac56b6a4a8bc8 ""
   "eso-pic.sty" 1381513458 9460 d2935ae95b5cd343fcf5887ff530288d ""
   "pipeline3.png" 1414624164 186190 515ad580bb15d4be2e1fcd1d6f88244f ""
   (generated)
   "egpaper_for_review.pdf"
-  "egpaper_for_review.brf"
   "egpaper_for_review.aux"
+  "egpaper_for_review.brf"
   "egpaper_for_review.log"
