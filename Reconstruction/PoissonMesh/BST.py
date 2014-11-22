@@ -1,3 +1,5 @@
+from node import Node
+
 class BST:
 
     def __init__(self):
@@ -86,15 +88,3 @@ class BST:
             layer = next
             next = []
         return keys
-
-
-
-
-class Node:
-
-    def __init__(self, key, value):
-        self.key = key
-        self.value = value
-        self.parent = None
-        self.left = None
-        self.right = None
