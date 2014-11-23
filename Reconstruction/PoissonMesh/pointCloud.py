@@ -37,7 +37,7 @@ class PointCloud:
                 covar += np.outer(var, var)
             covar /= k
             evalues, evectors = np.linalg.eig(covar)
-            pt.normal = evectors[np.argmin(evalues)]
+            pt.normal = evectors[:, np.argmin(evalues)]
             # assert np.inner(pt.normal, pt.normal) == 1
         self._orient_normals(k)
 
@@ -49,14 +49,17 @@ class PointCloud:
         if root.normal[2] < 0:
             root.normal *= -1
         prev = root
-        visited = {root}
+        visited = set()
         heap = BinaryHeap()
         heap.insert(0, root)
         while not heap.is_empty():
             pt = heap.extract_min()
-            if pt not in visited:
-                visited.add(pt)
+            # print 'Point:', pt, pt.normal
+            # print 'Prev:', prev, prev.normal
+            # print
+            visited.add(pt)
             if np.dot(prev.normal, pt.normal) < 0:
+                # print 'flipping'
                 pt.normal *= -1
             prev = pt
 
@@ -64,7 +67,15 @@ class PointCloud:
             for pt2 in neighbors:
                 if pt2 not in visited:
                     dist = 1. - np.abs(np.dot(pt.normal, pt2.normal))
-                    heap.insert(dist, pt2)
+                    if pt2 in heap.map:
+                        index = heap.map[pt2]
+                        old_dist = heap.heap[index][0]
+                        if dist < old_dist:
+                            heap.update_key(dist, pt2)
+                    else:
+                        heap.insert(dist, pt2)
+
+        print 'Visited %d vertices' % len(visited)
 
     def _construct_mesh(self, k):
         for pt in self.points:
@@ -83,7 +94,7 @@ class PointCloud:
         for pt in self.points:
             if normals:
                 args = np.concatenate([pt.position, pt.normal])
-                axis.quiver(*args, length=0.03)
+                axis.quiver(*args, length=0.1)
             else:
                 axis.scatter(*pt.position)
         axis.set_xlabel('X')
@@ -97,7 +108,7 @@ class PointCloud:
 def make_sphere():
     r = 1
     pc = PointCloud()
-    for phi in np.linspace(0, np.pi, 20):
+    for phi in np.linspace(0, np.pi, 10):
         for theta in np.linspace(0, 2*np.pi, 20):
             z = r * np.cos(phi)
             x = r * np.sin(phi) * np.cos(theta)
@@ -108,8 +119,8 @@ def make_sphere():
 def make_plane():
     s = 1
     pc = PointCloud()
-    for x in np.linspace(0, s, 10):
-        for y in np.linspace(0, x, 10):
+    for x in np.linspace(0, s, 3):
+        for y in np.linspace(0, s, 3):
             pc.add_point(x,y,0)
     # for i in range(20):
     #     for j in range(20):
@@ -127,8 +138,29 @@ def null(M):
 
 
 if __name__ == '__main__':
-    pc = make_plane()
-    # random.shuffle(pc.points)
-    pc._compute_normals(5)
-    pc._construct_mesh(1)
+    pc = make_sphere()
+    # for pt in pc.points:
+    #     pt.normal = np.array([0,0,1])
+    #
+    # pc.points[0].normal *= -1
+    # pc.points[1].normal *= -1
+    # pc.points[4].normal *= -1
+    # pc.points[5].normal *= -1
+    # pc.points[6].normal *= -1
+    # pc.points[7].normal *= -1
     # pc.display(normals=True)
+    pc._compute_normals(5)
+    pc._orient_normals(20)
+    pc.display(normals=True)
+    # random.shuffle(pc.points)
+    # pt = Point(.5, .5, .5)
+    # neighbors = pc.nearest_neighbors(pt, 5)
+    # print neighbors
+    # centroid = np.mean([pt.position for pt in neighbors], axis=0)
+    # M = np.zeros((3,3))
+    # for pt2 in neighbors:
+    #     v = pt2.position - centroid
+    #     M += np.outer(v, v)
+    # print np.linalg.eig(M)
+    # pc.display(normals=True)
+    # pc._construct_mesh(1)
