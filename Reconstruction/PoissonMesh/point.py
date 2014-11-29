@@ -6,7 +6,7 @@ class Point:
         self.position = np.array([x,y,z])
         self.normal = None
 
-    def distTo(self, pt):
+    def dist_to(self, pt):
         delta = self.position - pt.position
         return np.sqrt(np.inner(delta, delta))
 

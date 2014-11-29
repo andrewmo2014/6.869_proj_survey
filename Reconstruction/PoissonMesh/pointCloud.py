@@ -18,7 +18,7 @@ class PointCloud:
         '''Returns the k nearest neighbors. Eventually, this should be implemented using a kd tree or an R tree. For now, we use exhaustive search'''
         neighbors = [(None, float('inf')) for _ in range(k)]
         for pt2 in self.points:
-            dist = pt2.distTo(pt)
+            dist = pt2.dist_to(pt)
             index = k
             while index > 0 and dist < neighbors[index-1][1]:
                 index -= 1
@@ -48,32 +48,37 @@ class PointCloud:
         root = self.points[index]
         if root.normal[2] < 0:
             root.normal *= -1
-        prev = root
-        visited = set()
+        parents = {}
         heap = BinaryHeap()
-        heap.insert(0, root)
+        for pt in self.points:
+            if pt == root:
+                heap.insert(0, root)
+                parents[root] = root
+            else:
+                parents[pt] = root
+                dist = !!!!!
+                heap.insert(float('-inf'), pt)
         while not heap.is_empty():
             pt = heap.extract_min()
             # print 'Point:', pt, pt.normal
             # print 'Prev:', prev, prev.normal
             # print
             visited.add(pt)
+            prev = parents[pt]
             if np.dot(prev.normal, pt.normal) < 0:
                 # print 'flipping'
                 pt.normal *= -1
-            prev = pt
 
-            neighbors = self.nearest_neighbors(pt, k)
+            neighbors = self.nearest_neighbors(pt, len(self.points))
             for pt2 in neighbors:
                 if pt2 not in visited:
-                    dist = 1. - np.abs(np.dot(pt.normal, pt2.normal))
-                    if pt2 in heap.map:
-                        index = heap.map[pt2]
-                        old_dist = heap.heap[index][0]
-                        if dist < old_dist:
-                            heap.update_key(dist, pt2)
-                    else:
-                        heap.insert(dist, pt2)
+                    old_dist = heap.get_key(pt2)
+                    norm_dist = 1. - np.abs(np.dot(pt.normal, pt2.normal))
+                    euclidean_dist = pt.dist_to(pt2)
+                    dist = norm_dist * euclidean_dist
+                    if dist < old_dist:
+                        parents[pt2] = pt
+                        heap.update_key(dist, pt2)
 
         print 'Visited %d vertices' % len(visited)
 
@@ -105,11 +110,12 @@ class PointCloud:
         axis.set_zlim([0,1])
         plt.show()
 
+
 def make_sphere():
     r = 1
     pc = PointCloud()
     for phi in np.linspace(0, np.pi, 10):
-        for theta in np.linspace(0, 2*np.pi, 20):
+        for theta in np.linspace(0, 2*np.pi, 10):
             z = r * np.cos(phi)
             x = r * np.sin(phi) * np.cos(theta)
             y = r * np.sin(phi) * np.sin(theta)
@@ -150,7 +156,7 @@ if __name__ == '__main__':
     # pc.points[7].normal *= -1
     # pc.display(normals=True)
     pc._compute_normals(5)
-    pc._orient_normals(20)
+    # pc._orient_normals(20)
     pc.display(normals=True)
     # random.shuffle(pc.points)
     # pt = Point(.5, .5, .5)
