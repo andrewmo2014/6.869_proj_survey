@@ -47,7 +47,7 @@ class Quadtree:
         for node in leaves:
             node_contour = self._compute_node_contour(f, node)
             if node_contour is not None:
-                contour.append(node_contour)
+                contour.extend(node_contour)
         return contour
 
     def _compute_node_contour(self, f, node):
@@ -59,10 +59,10 @@ class Quadtree:
 
         dx = node.x2 - node.x1
         dy = node.y2 - node.y1
-        lower_x = f_ll / (f_ll + f_lr) * dx
-        upper_x = f_ul / (f_ul + f_ur) * dx
-        left_y = f_ll / (f_ll + f_ul) * dy
-        right_y = f_lr / (f_lr + f_ur) * dy
+        lower_x = node.x1 + f_ll / (f_ll - f_lr) * dx
+        upper_x = node.x1 + f_ul / (f_ul - f_ur) * dx
+        left_y = node.y1 + f_ll / (f_ll - f_ul) * dy
+        right_y = node.y1 + f_lr / (f_lr - f_ur) * dy
 
         if signs == [1, 0, 0, 0] or signs == [0, 1, 1, 1]:
             pt1 = Point(node.x1, left_y, 0)
@@ -93,24 +93,16 @@ class Quadtree:
             x_mid = 0.5 * (node.x1 + node.x2)
             y_mid = 0.5 * (node.y1 + node.y2)
             f_mid = f(x_mid, y_mid)
-            pt_left = Point(node.x1, left_y)
-            pt_right = Point(node.x2, right_y)
-            pt_upper = Point(upper_x, node.y2)
-            pt_lower = Point(lower_x, node.y1)
-            if (f_mid > 0 and signs == [1, 0, 0, 1]) or
+            pt_left = Point(node.x1, left_y, 0)
+            pt_right = Point(node.x2, right_y, 0)
+            pt_upper = Point(upper_x, node.y2, 0)
+            pt_lower = Point(lower_x, node.y1, 0)
+            if (f_mid > 0 and signs == [1, 0, 0, 1]) or \
                (f_mid < 0 and signs == [0, 1, 1, 0]):
                 return [(pt_left, pt_lower), (pt_upper, pt_right)]
             else:
                 return [(pt_left, pt_upper), (pt_lower, pt_right)]
         return None
-
-
-
-
-
-
-
-
 
 
 class Node:
@@ -156,23 +148,23 @@ class Node:
         return lower, upper
 
     def split(self):
+        '''The left and right sides must have the same y split values. Otherwise, we may get a discontinuity at the x median boundary'''
         x_median = self._get_median(self.points, 0)
+        y_median = self._get_median(self.points, 1)
         left, right = self._partition(self.points, x_median, 0)
-        left_y_median = self._get_median(left, 1)
-        right_y_median = self._get_median(right, 1)
-        ul_points, ll_points = self._partition(left, left_y_median, 1)
-        ur_points, lr_points = self._partition(right, right_y_median, 1)
+        ll_points, ul_points = self._partition(left, y_median, 1)
+        lr_points, ur_points = self._partition(right, y_median, 1)
         if len(ul_points) != 0:
-            bounds = (self.x1, x_median, left_y_median, self.y2)
+            bounds = (self.x1, x_median, y_median, self.y2)
             self.ul = Node(ul_points, bounds)
         if len(ll_points) != 0:
-            bounds = (self.x1, x_median, self.y1, left_y_median)
+            bounds = (self.x1, x_median, self.y1, y_median)
             self.ll = Node(ll_points, bounds)
         if len(ur_points) != 0:
-            bounds = (x_median, self.x2, right_y_median, self.y2)
+            bounds = (x_median, self.x2, y_median, self.y2)
             self.ur = Node(ur_points, bounds)
         if len(lr_points) != 0:
-            bounds = (x_median, self.x2, self.y1, left_y_median)
+            bounds = (x_median, self.x2, self.y1, y_median)
             self.lr = Node(lr_points, bounds)
 
 
@@ -189,8 +181,12 @@ class Node:
         return child_list
 
     def draw(self):
-        x_box = [self.x1, self.x1, self.x2, self.x2, self.x1]
-        y_box = [self.y1, self.y2, self.y2, self.y1, self.y1]
+        # Avoid overlapping lines in visualization
+        dx = (self.x2 - self.x1) / 100
+        dy = (self.y2 - self.y1) / 100
+
+        x_box = [self.x1-dx, self.x1-dx, self.x2+dx, self.x2+dx, self.x1-dx]
+        y_box = [self.y1-dy, self.y2+dy, self.y2+dy, self.y1-dy, self.y1-dy]
         plt.plot(x_box, y_box)
         x_vec = [pt.position[0] for pt in self.points]
         y_vec = [pt.position[1] for pt in self.points]

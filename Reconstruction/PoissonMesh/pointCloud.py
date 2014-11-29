@@ -14,10 +14,12 @@ class PointCloud:
         pt = Point(x, y, z)
         self.points.append(pt)
 
-    def nearest_neighbors(self, pt, k=1):
+    def nearest_neighbors(self, pt, k=1, points=None):
         '''Returns the k nearest neighbors. Eventually, this should be implemented using a kd tree or an R tree. For now, we use exhaustive search'''
+        if points is None:
+            points = self.points
         neighbors = [(None, float('inf')) for _ in range(k)]
-        for pt2 in self.points:
+        for pt2 in points:
             dist = pt2.dist_to(pt)
             index = k
             while index > 0 and dist < neighbors[index-1][1]:
@@ -26,7 +28,7 @@ class PointCloud:
                 neighbors = neighbors[:index] + [(pt2, dist)] + neighbors[index:-1]
         return [pt2 for pt2, dist in neighbors]
 
-    def _compute_normals(self, k=3):
+    def compute_normals(self, k=3):
         print 'Computing normals'
         for pt in self.points:
             neighbors = self.nearest_neighbors(pt, k=k)
@@ -38,7 +40,6 @@ class PointCloud:
             covar /= k
             evalues, evectors = np.linalg.eig(covar)
             pt.normal = evectors[:, np.argmin(evalues)]
-            # assert np.inner(pt.normal, pt.normal) == 1
         self._orient_normals(k)
 
     def _orient_normals(self, k):
@@ -46,41 +47,36 @@ class PointCloud:
         # find pt with maximum z value
         index = np.argmax([pt.position[2] for pt in self.points])
         root = self.points[index]
-        if root.normal[2] < 0:
+        if root.normal[2] > 0:
             root.normal *= -1
         parents = {}
         heap = BinaryHeap()
         for pt in self.points:
             if pt == root:
-                heap.insert(0, root)
+                heap.insert(0, pt)
                 parents[root] = root
             else:
-                parents[pt] = root
-                dist = !!!!!
-                heap.insert(float('-inf'), pt)
+                heap.insert(float('inf'), pt)
         while not heap.is_empty():
             pt = heap.extract_min()
-            # print 'Point:', pt, pt.normal
-            # print 'Prev:', prev, prev.normal
-            # print
-            visited.add(pt)
-            prev = parents[pt]
+            if pt in parents:
+                prev = parents[pt]
+            else:
+                prev = self.nearest_neighbors(pt, 1, parents.keys())[0]
+                parents[pt] = prev
             if np.dot(prev.normal, pt.normal) < 0:
-                # print 'flipping'
+                print 'flipping'
                 pt.normal *= -1
 
-            neighbors = self.nearest_neighbors(pt, len(self.points))
+            neighbors = self.nearest_neighbors(pt, k)
             for pt2 in neighbors:
-                if pt2 not in visited:
+                if pt2 not in parents:
                     old_dist = heap.get_key(pt2)
-                    norm_dist = 1. - np.abs(np.dot(pt.normal, pt2.normal))
-                    euclidean_dist = pt.dist_to(pt2)
-                    dist = norm_dist * euclidean_dist
+                    dist = 1. - np.abs(np.dot(pt.normal, pt2.normal))
                     if dist < old_dist:
                         parents[pt2] = pt
                         heap.update_key(dist, pt2)
 
-        print 'Visited %d vertices' % len(visited)
 
     def _construct_mesh(self, k):
         for pt in self.points:
@@ -123,17 +119,11 @@ def make_sphere():
     return pc
 
 def make_plane():
-    s = 1
+    s = 2*np.pi
     pc = PointCloud()
-    for x in np.linspace(0, s, 3):
-        for y in np.linspace(0, s, 3):
-            pc.add_point(x,y,0)
-    # for i in range(20):
-    #     for j in range(20):
-    #         x = random.random()
-    #         y = random.random()
-    #         # z = 0.01 * random.random()
-    #         pc.add_point(x,y,x)
+    for x in np.linspace(0, s, 20):
+        for y in np.linspace(0, s, 20):
+            pc.add_point(x,y,np.sin(x))
     return pc
 
 def null(M):
@@ -144,29 +134,7 @@ def null(M):
 
 
 if __name__ == '__main__':
-    pc = make_sphere()
-    # for pt in pc.points:
-    #     pt.normal = np.array([0,0,1])
-    #
-    # pc.points[0].normal *= -1
-    # pc.points[1].normal *= -1
-    # pc.points[4].normal *= -1
-    # pc.points[5].normal *= -1
-    # pc.points[6].normal *= -1
-    # pc.points[7].normal *= -1
-    # pc.display(normals=True)
-    pc._compute_normals(5)
-    # pc._orient_normals(20)
+    pc = make_plane()
+    random.shuffle(pc.points)
+    pc.compute_normals(10)
     pc.display(normals=True)
-    # random.shuffle(pc.points)
-    # pt = Point(.5, .5, .5)
-    # neighbors = pc.nearest_neighbors(pt, 5)
-    # print neighbors
-    # centroid = np.mean([pt.position for pt in neighbors], axis=0)
-    # M = np.zeros((3,3))
-    # for pt2 in neighbors:
-    #     v = pt2.position - centroid
-    #     M += np.outer(v, v)
-    # print np.linalg.eig(M)
-    # pc.display(normals=True)
-    # pc._construct_mesh(1)
