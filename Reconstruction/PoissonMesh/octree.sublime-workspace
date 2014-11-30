@@ -1,0 +1,743 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"low",
+				"lowFreq"
+			],
+			[
+				"YU",
+				"YUV2RGB"
+			],
+			[
+				"alpha",
+				"alphaY"
+			],
+			[
+				"sima",
+				"sigmaThigh"
+			],
+			[
+				"sigm",
+				"sigmaTlow"
+			],
+			[
+				"time",
+				"timeBandPass"
+			],
+			[
+				"lo",
+				"lowPass"
+			],
+			[
+				"RG",
+				"RGB2YUV"
+			],
+			[
+				"clapm",
+				"clamped"
+			],
+			[
+				"sharp",
+				"sharpnessStack"
+			],
+			[
+				"maxp",
+				"maxmaxPara"
+			],
+			[
+				"max",
+				"maxmaxPara"
+			],
+			[
+				"aper",
+				"aperture"
+			],
+			[
+				"center",
+				"centerv"
+			],
+			[
+				"ape",
+				"aperture"
+			],
+			[
+				"sho",
+				"shiftFloat"
+			],
+			[
+				"conta",
+				"constantIm"
+			],
+			[
+				"consta",
+				"constantIm"
+			],
+			[
+				"const",
+				"constantIm"
+			],
+			[
+				"thetas",
+				"thetasHigh"
+			],
+			[
+				"comput",
+				"computeAngles"
+			],
+			[
+				"eige",
+				"eigenVec"
+			],
+			[
+				"eigen",
+				"eigenVec"
+			],
+			[
+				"import",
+				"importanceLow"
+			],
+			[
+				"sha",
+				"sharpness"
+			],
+			[
+				"rand",
+				"random"
+			],
+			[
+				"tex",
+				"texScaled"
+			],
+			[
+				"my",
+				"my_composition"
+			],
+			[
+				"extr",
+				"extra_credit"
+			],
+			[
+				"apply",
+				"applyLaplacian"
+			],
+			[
+				"appl",
+				"applyKernel"
+			],
+			[
+				"app",
+				"applyKernel"
+			],
+			[
+				"dot",
+				"dotIm"
+			],
+			[
+				"mo",
+				"most_difficult"
+			],
+			[
+				"mos",
+				"most_exciting"
+			],
+			[
+				"pot",
+				"potential_issues"
+			],
+			[
+				"source",
+				"sourceWeight"
+			],
+			[
+				"sum",
+				"weightSum"
+			],
+			[
+				"out",
+				"outWeight"
+			],
+			[
+				"sou",
+				"sourceW"
+			],
+			[
+				"sour",
+				"sourceWeight"
+			],
+			[
+				"sourc",
+				"sourceWeights"
+			],
+			[
+				"gau",
+				"gaussianBlur"
+			],
+			[
+				"weight",
+				"weightSumH"
+			],
+			[
+				"blur",
+				"blurImage"
+			],
+			[
+				"sig",
+				"sigmaG"
+			],
+			[
+				"so",
+				"sourceWeight"
+			],
+			[
+				"rea",
+				"repeatEdge"
+			],
+			[
+				"lit",
+				"listOfImages"
+			],
+			[
+				"list",
+				"listOfImages"
+			],
+			[
+				"outW",
+				"outWMap"
+			],
+			[
+				"fil",
+				"filteredPairs"
+			],
+			[
+				"in",
+				"inliers"
+			],
+			[
+				"Ra",
+				"RANSAC"
+			],
+			[
+				"compute",
+				"computeFeatures"
+			],
+			[
+				"im",
+				"imFeatures"
+			],
+			[
+				"feature",
+				"featurePerImage"
+			],
+			[
+				"corn",
+				"cornerList"
+			],
+			[
+				"compu",
+				"computeTensor"
+			],
+			[
+				"A7",
+				"A7PairsToA6Pairs"
+			],
+			[
+				"blu",
+				"blurDescriptor"
+			],
+			[
+				"num",
+				"numInliers"
+			],
+			[
+				"desc",
+				"descriptor"
+			],
+			[
+				"des",
+				"descriptor"
+			],
+			[
+				"feat",
+				"feature2"
+			],
+			[
+				"lis",
+				"listFeatures1"
+			],
+			[
+				"descri",
+				"descriptors"
+			],
+			[
+				"fac",
+				"factorSigma"
+			],
+			[
+				"cor",
+				"cornerResponse"
+			],
+			[
+				"bl",
+				"blurLum"
+			],
+			[
+				"li",
+				"listOfPairs4"
+			],
+			[
+				"listO",
+				"listOfImages"
+			],
+			[
+				"cons",
+				"constantIm"
+			],
+			[
+				"listOf",
+				"listOfH"
+			],
+			[
+				"listOF",
+				"listOfPairs"
+			],
+			[
+				"H",
+				"Hlist"
+			],
+			[
+				"Lis",
+				"listOfListOfPairs"
+			],
+			[
+				"listof",
+				"listOfImages"
+			],
+			[
+				"ref",
+				"refIndex"
+			],
+			[
+				"comp",
+				"computeNHomographies"
+			],
+			[
+				"bb",
+				"bbTrans"
+			],
+			[
+				"sti",
+				"stitch"
+			],
+			[
+				"trans",
+				"translate"
+			],
+			[
+				"bbox",
+				"bbox2"
+			],
+			[
+				"bbo",
+				"bboxUnion"
+			],
+			[
+				"y",
+				"y"
+			],
+			[
+				"interpo",
+				"interpolateLin"
+			],
+			[
+				"esp",
+				"epsilonMaxi"
+			],
+			[
+				"epsi",
+				"epsilonMini"
+			],
+			[
+				"image",
+				"imageList"
+			],
+			[
+				"lumi",
+				"lumiChromi"
+			],
+			[
+				"epsilon",
+				"epsilonMini"
+			],
+			[
+				"epsil",
+				"epsilonMini"
+			],
+			[
+				"eps",
+				"epsilonMaxi"
+			],
+			[
+				"ep",
+				"epsilonMini"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"in",
+				"Package Control: Install Package"
+			],
+			[
+				"inst",
+				"Package Control: Install Package"
+			],
+			[
+				"package install",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: List Packages"
+			],
+			[
+				"python",
+				"Set Syntax: Python"
+			],
+			[
+				"Package Control: inst",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: insta",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"Build: Cancel"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 449.0
+	},
+	"console":
+	{
+		"height": 209.0,
+		"history":
+		[
+			"export PYTHONPATH=/Library/Python/2.7/site-packages/:$PYTHONPATH",
+			"import python",
+			"exit",
+			"python -V",
+			"help",
+			"python",
+			"print \"hello\"",
+			"print .__file__",
+			"print __file__",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
+			"print no;",
+			"print no",
+			"no = 1",
+			"print no",
+			"print",
+			"print \"hello\";",
+			"print \"hello\"",
+			"python",
+			"ls",
+			"print \"hello\"",
+			"import matplotlib",
+			"which python",
+			"clear",
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/andrew123111/Library/Application Support/Sublime Text 3/Packages/User/SublimePython.sublime-settings",
+		"/Users/andrew123111/Library/Application Support/Sublime Text 3/Packages/SublimePythonIDE/SublimePython.sublime-settings",
+		"/Users/andrew123111/Library/Application Support/Sublime Text 3/Packages/User/customPython.sublime-build",
+		"/Users/andrew123111/Library/Application Support/Sublime Text 3/Packages/Package Control/Package Control.sublime-settings",
+		"/Users/andrew123111/Documents/Courses/Fall 2014/6.869/6.869_proj_survey/Reconstruction/PoissonMesh/pointCloud.py",
+		"/Users/andrew123111/Documents/Courses/Fall 2014/6.869/6.869_proj_survey/Reconstruction/PoissonMesh/poissonMesh.py",
+		"/Users/andrew123111/Downloads/PoissonRecon/Src/MarchingCubes.cpp",
+		"/Users/andrew123111/Downloads/PoissonRecon/Src/MultiGridOctreeData.h",
+		"/Users/andrew123111/Downloads/PoissonRecon/Src/Octree.h",
+		"/Users/andrew123111/Documents/Courses/Fall 2014/6.869/6.869_proj_survey/Reconstruction/PoissonMesh/kdTree.py",
+		"/Users/andrew123111/Documents/Courses/Fall 2014/6.869/6.869_proj_survey/Reconstruction/PoissonMesh/BST.py",
+		"/Users/andrew123111/Documents/Courses/Fall 2014/6.869/6.869_proj_survey/Reconstruction/PoissonMesh/binaryHeap.py",
+		"/Users/andrew123111/Documents/Courses/Fall 2014/6.869/PS8/pset8_template.tex",
+		"/Users/andrew123111/Downloads/AndrewMorana12Starter_final/a12.py",
+		"/Users/andrew123111/Downloads/AndrewMorana12Starter_final/a12Script.py",
+		"/Users/andrew123111/Downloads/Lucas Kanade/LucasKanade.m",
+		"/Users/andrew123111/Downloads/Lucas Kanade/LucasKanadeRefined.m",
+		"/Users/andrew123111/Downloads/EVM_Matlab 2/reproduceResults.m",
+		"/Users/andrew123111/Documents/MATLAB/6.867/homework2/multilr.py",
+		"/Users/andrew123111/Documents/MATLAB/6.867/homework2/multisvm.py",
+		"/Users/andrew123111/Documents/Courses/Fall 2014/6.867/6.867_proj_survey/ML_egpaper_final.tex",
+		"/Users/andrew123111/Documents/Courses/Fall 2014/6.867/homework2/homework2report.tex",
+		"/Users/andrew123111/Documents/Courses/Fall 2014/6.869/6.869_proj_survey/egpaper_for_review.tex",
+		"/Users/andrew123111/Documents/Courses/Fall 2014/6.867/temp_survey.tex",
+		"/Users/andrew123111/Documents/Courses/Fall 2014/6.869/PS1/pset1_template.tex",
+		"/Users/andrew123111/Documents/Courses/Fall 2014/6.869/PS7/pset7_template.tex",
+		"/Users/andrew123111/Documents/Courses/Fall 2014/6.869/6.869_proj_survey/egpaper_final.tex",
+		"/Users/andrew123111/Documents/Courses/Fall 2014/6.869/6.869_proj_survey/egbib.bib",
+		"/Users/andrew123111/Downloads/cvpr2014AuthorKit/latex/egpaper_final.tex",
+		"/Users/andrew123111/Desktop/ja.tex",
+		"/Users/andrew123111/Downloads/IEEE Journal/main.tex",
+		"/Users/andrew123111/Downloads/SimplestPluginExample 2/Unity Project Plugin/Assets/PluginImport.cs",
+		"/Users/andrew123111/Documents/Courses/Fall 2014/6.869/PS5/pset5_template.tex",
+		"/Users/andrew123111/Downloads/libspotify-12.1.51-Darwin-universal/examples/Randomify/SpotifyPlaylist.m",
+		"/Users/andrew123111/Documents/Courses/Fall 2014/6.867/homework1/homework1_solution.tex",
+		"/Users/andrew123111/Documents/Courses/Fall 2014/6.869/PS4/pset3_template.tex",
+		"/Users/andrew123111/Downloads/6.867-pset-1-master/linearbasis.py",
+		"/Users/andrew123111/Downloads/6.867-pset-1-master/gradient_descent.py",
+		"/Users/andrew123111/Documents/Personal/Letters/Resume/resume-master/resume.cls",
+		"/Users/andrew123111/Documents/Courses/Fall 2014/6.869/PS2/pset2_template.tex",
+		"/Users/andrew123111/Documents/Personal/Letters/Resume/resume-master/AndrewResume.tex",
+		"/Users/andrew123111/Documents/Personal/Letters/Resume/resume-master/articleNew.cls",
+		"/Users/andrew123111/Documents/Personal/Letters/Resume/resume-master/shading.sty",
+		"/Users/andrew123111/Documents/Personal/Letters/Resume/resume-master/article.cls",
+		"/Users/andrew123111/Documents/MATLAB/6.869/PSET1/simpleworldY.m",
+		"/Users/andrew123111/Downloads/pset3 (1)/pset3_template.tex",
+		"/Users/andrew123111/Documents/Courses/Fall 2014/pset1_template.tex",
+		"/Users/andrew123111/Desktop/Test.tex",
+		"/Users/andrew123111/Desktop/Resume/res.cls",
+		"/Users/andrew123111/Desktop/Resume/helvetica.sty",
+		"/Users/andrew123111/Desktop/Resume/res8.tex",
+		"/Users/andrew123111/Downloads/pset6/pset6_template.tex",
+		"/Users/andrew123111/Downloads/pset5/pset5_template.tex",
+		"/Users/andrew123111/Downloads/pset4 2/graph43c.dot",
+		"/Users/andrew123111/Downloads/pset4 2/graph4_2f1tree.dot",
+		"/Users/andrew123111/Downloads/pset4 2/graph4_2f1.dot",
+		"/Users/andrew123111/Downloads/pset4 2/graph4_2f2.dot",
+		"/Users/andrew123111/Downloads/pset4 2/graph4_1b.dot",
+		"/Users/andrew123111/Downloads/pset4 2/pset4_template.tex",
+		"/Users/andrew123111/Downloads/pset4 2/pset3_template.tex",
+		"/Users/andrew123111/Downloads/pset4 2/graph42f2tree.eps",
+		"/Users/andrew123111/Downloads/pset3 (1)/partB/tester.py",
+		"/Users/andrew123111/Documents/Courses/Spring 2014/6.006/Psets/pset1/pset1_template.tex",
+		"/Users/andrew123111/Downloads/prompt 2/pset2_template.tex",
+		"/Users/andrew123111/Downloads/pset3 (1)/partB/PSET3.py",
+		"/Users/andrew123111/Downloads/GameOfLifeLayer/GameOfLifeLayer.m",
+		"/Users/andrew123111/Documents/Courses/6.815/AndrewMorana12Starter_final/a12.py",
+		"/Users/andrew123111/Documents/Courses/6.815/pset11_macUpdatedNew/harris-numpy.py",
+		"/Users/andrew123111/Documents/Courses/6.815/A6Starter/a6.py",
+		"/Users/andrew123111/Documents/Courses/6.815/a7_release/a7.py",
+		"/Users/andrew123111/Documents/Courses/6.815/a12Starter/a12Script.py",
+		"/Users/andrew123111/Documents/Courses/6.815/a12Starter/a12.py",
+		"/Users/andrew123111/Documents/Courses/6.815/pset11_mac/tutorial6_3x3box_schedule.py",
+		"/Users/andrew123111/Documents/Courses/6.815/pset11_mac/tutorial5_schedule_smoothGradient.py",
+		"/Users/andrew123111/Documents/Courses/6.815/pset11_mac/tutorial4_gradientClamped.py",
+		"/Users/andrew123111/Documents/Courses/6.815/pset11_mac/tutorial3_gradient.py",
+		"/Users/andrew123111/Documents/Courses/6.815/pset11_mac/tutorial2_brighter.py",
+		"/Users/andrew123111/Documents/Courses/6.815/pset11_mac/tutorial1_smoothGradient.py",
+		"/Users/andrew123111/Documents/Courses/6.815/AndrewMoran_a10_updatedLF/a10Script.py",
+		"/Users/andrew123111/Documents/Courses/6.815/AndrewMoran_a10_updatedLF/a10.py",
+		"/Users/andrew123111/Documents/Courses/6.815/AndrewMoran_a10/a10Script.py",
+		"/Users/andrew123111/Documents/Courses/6.815/AndrewMoran_a10/a10.py",
+		"/Users/andrew123111/Documents/Courses/6.815/lightFieldStarter/a10.py",
+		"/Users/andrew123111/Documents/Courses/6.815/lightFieldStarter/a10Script.py",
+		"/Users/andrew123111/Documents/Courses/6.815/lightFieldStarter/imageIO.py",
+		"/Users/andrew123111/Documents/Courses/6.815/a1Starter/a1.py",
+		"/Users/andrew123111/Documents/Courses/6.815/a5_final/a5.py",
+		"/Users/andrew123111/Documents/Courses/6.815/a8_release/a8.py",
+		"/Users/andrew123111/Documents/Courses/6.815/AndrewMoran_a9/a9.py",
+		"/Users/andrew123111/Documents/Courses/6.815/AndrewMoran_a9/nprHelper.py",
+		"/Users/andrew123111/Documents/Courses/6.815/NPR/npr.py",
+		"/Users/andrew123111/Documents/Courses/6.815/NPR/nprHelper.py",
+		"/Users/andrew123111/Documents/Courses/6.815/NPR/nprScript.py",
+		"/Users/andrew123111/Documents/Courses/6.815/AndrewMoran_a8/nprScript.py",
+		"/Users/andrew123111/Documents/Courses/6.815/AndrewMoran_a8/a9.py",
+		"/Users/andrew123111/Downloads/NPR/npr.py",
+		"/Users/andrew123111/Downloads/NPR/nprHelper.py",
+		"/Users/andrew123111/Documents/Courses/6.815/a7_release copy/a7.py",
+		"/Users/andrew123111/Downloads/NPR/nprScript.py",
+		"/Users/andrew123111/Documents/Courses/6.815/A2Starter/a2.py",
+		"/Users/andrew123111/Downloads/NPR/imageIO.py",
+		"/Users/andrew123111/Desktop/a8_release/a8_test.py",
+		"/Users/andrew123111/Desktop/a8_release/a8.py",
+		"/Users/andrew123111/Desktop/a8_release/a8_readme.py",
+		"/Users/andrew123111/Desktop/a8_release/a8_starter.py",
+		"/Users/andrew123111/Documents/Courses/6.815/A2Starter/a2Tests.py",
+		"/Users/andrew123111/Documents/Courses/6.815/a7_release/a7_test.py",
+		"/Users/andrew123111/Documents/Courses/6.815/a7_release/a6.py",
+		"/Users/andrew123111/Documents/Courses/6.815/a7_release/a7_readme.py",
+		"/Users/andrew123111/Documents/Courses/6.815/a7_release copy/a7_readme.py",
+		"/Users/andrew123111/Documents/Courses/6.815/a7_release/imageIO.py",
+		"/Users/andrew123111/Documents/Courses/6.815/Pset3/a3.py",
+		"/Users/andrew123111/Documents/Courses/6.815/a7.py",
+		"/Users/andrew123111/Documents/Courses/6.815/A6Starter/Pano-UI/click.html",
+		"/Users/andrew123111/Documents/Courses/6.815/A6Starter/a6Script.py",
+		"/Users/andrew123111/Documents/Courses/6.815/A2Starter/Input/click.html",
+		"/Users/andrew123111/Documents/Courses/6.815/A6Starter/png.py",
+		"/Users/andrew123111/Documents/Courses/6.815/A6Starter/imageIO.py",
+		"/Users/andrew123111/Documents/Courses/6.815/a4_starter/a4.py",
+		"/Users/andrew123111/Documents/Courses/6.815/a5/a5.py",
+		"/Users/andrew123111/Documents/Courses/6.815/a5_final/a5_test.py",
+		"/Users/andrew123111/Documents/Courses/6.815/a5/bilagrid.py",
+		"/Users/andrew123111/Documents/Courses/6.815/a5/a5_test.py",
+		"/Users/andrew123111/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap"
+	],
+	"find":
+	{
+		"height": 25.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"binary",
+			"spar",
+			"subfig",
+			"finite",
+			"fitA",
+			"convex_fun",
+			"computeSSE",
+			"\\item",
+			"itemize",
+			"item",
+			"theproblemset",
+			"stitch",
+			"stitchH",
+			"bbTrans",
+			"convert",
+			"applyHomo"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "octree.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
