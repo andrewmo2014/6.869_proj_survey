@@ -8,7 +8,8 @@ def load_ply(filename):
     with open(filename) as f:
         while 'end_header' not in f.readline():
             pass
-        for line in f.readlines()[::100]:
+        #for line in f.readlines()[::100]:
+        for line in f.readlines()[:6]:
             data = line.split()
             data = map(float, data)
             x, y, z = data[:3]
@@ -21,4 +22,6 @@ def load_ply(filename):
 if __name__ == '__main__':
     points = load_ply('../../Rift/temple.ply')
     octree = Octree(points, 3)
-    octree.display()
+    #octree.display()
+    octree._saveOFF()
+
