@@ -18,6 +18,44 @@ class Octree:
             leaves = new_leaves
             new_leaves = []
 
+    def _saveOFF(self):
+        print 'saving to OFF file'
+        fileW = open("test_octree.off","w")
+        fileW.write('COFF\n')
+        (v, i) = self._compute_voxel_string(self.root)
+        fileW.write(str(len(v)*8) + ' ' + str(len(i)) + '\n')
+        fileW.writelines(v)
+        fileW.writelines(i)
+        fileW.close()
+        print 'done with file'
+
+    def _compute_voxel_string(self, node):
+        nodes = [node]
+        next_nodes = []
+        voxels = []
+        indices = []
+        while nodes:
+            for n in nodes:
+                vertices = n._get_box_vertices()
+                stringToAdd = ""
+                for v in vertices:
+                    stringToAdd += (str(v.position[0]) + " " +
+                                    str(v.position[1]) + " " + 
+                                    str(v.position[2]) + '\n')
+                children = n.children()
+                if len(children) > 0:
+                    next_nodes.extend(children)
+                voxels.append(stringToAdd)
+                indices.append(self._line_edges(len(voxels)))
+            nodes = next_nodes
+            next_nodes = []
+        return (voxels, indices)
+
+    def _line_edges(self, i):
+        indices = [1,2,1,3,1,5,2,4,2,6,3,4,3,7,4,8,5,6,5,7,6,8,7,8]
+        vInd = [v*i for v in indices]
+        return ' '.join([str(x) for x in vInd]) + '\n'
+
     def display(self):
         print 'displaying'
         fig = plt.figure()
@@ -283,10 +321,26 @@ class Node:
             self.z1 = min(self.z1, z)
             self.z2 = max(self.z2, z)
 
+    def _get_box_vertices(self):
+        v1 = Point(self.x1, self.y1, self.z1)
+        v2 = Point(self.x1, self.y1, self.z2)
+        v3 = Point(self.x1, self.y2, self.z1)
+        v4 = Point(self.x1, self.y2, self.z2)
+        v5 = Point(self.x2, self.y1, self.z1)
+        v6 = Point(self.x2, self.y1, self.z2)
+        v7 = Point(self.x2, self.y2, self.z1)
+        v8 = Point(self.x2, self.y2, self.z2)
+        return [v1,v2,v3,v4,v5,v6,v7,v8]
+
 
     def _get_median(self, points, axis):
         vec = [pt.position[axis] for pt in points]
-        return np.median(vec)
+        #return np.median(vec)
+
+        if (axis == 0): return (self.x1 + self.x2)/2
+        if (axis == 1): return (self.y1 + self.y2)/2
+        if (axis == 2): return (self.z1 + self.z2)/2
+
 
     def _partition(self, points, value, axis):
         lower = []
@@ -385,9 +439,9 @@ class Node:
 
     def draw(self, axis):
         # Avoid overlapping lines in visualization
-        dx = (self.x2 - self.x1) / 100
-        dy = (self.y2 - self.y1) / 100
-        dz = (self.z2 - self.z1) / 100
+        dx = 0  #(self.x2 - self.x1) / 100
+        dy = 0  #(self.y2 - self.y1) / 100
+        dz = 0  #(self.z2 - self.z1) / 100
 
         front_face_x = [self.x1-dx, self.x2+dx, self.x2+dx, self.x1-dx, self.x1-dx]
         front_face_y = [self.y1-dy, self.y1-dy, self.y2+dy, self.y2+dy, self.y1-dy]
