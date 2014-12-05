@@ -18,44 +18,6 @@ class Octree:
             leaves = new_leaves
             new_leaves = []
 
-    def _saveOFF(self):
-        print 'saving to OFF file'
-        fileW = open("test_octree.off","w")
-        fileW.write('COFF\n')
-        (v, i) = self._compute_voxel_string(self.root)
-        fileW.write(str(len(v)*8) + ' ' + str(len(i)) + '\n')
-        fileW.writelines(v)
-        fileW.writelines(i)
-        fileW.close()
-        print 'done with file'
-
-    def _compute_voxel_string(self, node):
-        nodes = [node]
-        next_nodes = []
-        voxels = []
-        indices = []
-        while nodes:
-            for n in nodes:
-                vertices = n._get_box_vertices()
-                stringToAdd = ""
-                for v in vertices:
-                    stringToAdd += (str(v.position[0]) + " " +
-                                    str(v.position[1]) + " " + 
-                                    str(v.position[2]) + '\n')
-                children = n.children()
-                if len(children) > 0:
-                    next_nodes.extend(children)
-                voxels.append(stringToAdd)
-                indices.append(self._line_edges(len(voxels)))
-            nodes = next_nodes
-            next_nodes = []
-        return (voxels, indices)
-
-    def _line_edges(self, i):
-        indices = [1,2,1,3,1,5,2,4,2,6,3,4,3,7,4,8,5,6,5,7,6,8,7,8]
-        vInd = [v*i for v in indices]
-        return ' '.join([str(x) for x in vInd]) + '\n'
-
     def display(self):
         print 'displaying'
         fig = plt.figure()
@@ -130,6 +92,21 @@ class Octree:
         z_ul = node.z1 + f_ull / (f_ull - f_ulu) * dz
         z_uu = node.z1 + f_uul / (f_uul - f_uuu) * dz
 
+        x_ll_pt = Point(x_ll, node.y1, node.z1)
+        x_lu_pt = Point(x_lu, node.y1, node.z2)
+        x_ul_pt = Point(x_ul, node.y2, node.z1)
+        x_uu_pt = Point(x_uu, node.y2, node.z2)
+
+        y_ll_pt = Point(node.x1, y_ll, node.z1)
+        y_lu_pt = Point(node.x1, y_lu, node.z2)
+        y_ul_pt = Point(node.x2, y_ul, node.z1)
+        y_uu_pt = Point(node.x2, y_uu, node.z2)
+
+        z_ll_pt = Point(node.x1, node.y1, z_ll)
+        z_lu_pt = Point(node.x1, node.y2, z_lu)
+        z_ul_pt = Point(node.x2, node.y1, z_ul)
+        z_uu_pt = Point(node.x2, node.y2, z_uu)
+
         # 256 cases!!!
         # 128 after taking out symmetric cases
 
@@ -137,145 +114,137 @@ class Octree:
         if signs == [1, 0, 0, 0, 0, 0, 0, 0] or \
            signs == [0, 1, 1, 1, 1, 1, 1, 1]:
         #    lll
-            pt1 = Point(x_ll, node.y1, node.z1)
-            pt2 = Point(node.x1, y_ll, node.z1)
-            pt3 = Point(node.x1, node.y1, z_ll)
-            return [(pt1, pt2, pt3)]
+            return [(x_ll_pt, y_ll_pt, z_ll_pt)]
         if signs == [0, 1, 0, 0, 0, 0, 0, 0] or \
            signs == [1, 0, 1, 1, 1, 1, 1, 1]:
         #    llu
-            pt1 = Point(x_lu, node.y1, node.z2)
-            pt2 = Point(node.x1, y_lu, node.z2)
-            pt3 = Point(node.x1, node.y1, z_ll)
-            return [(pt1, pt2, pt3)]
+            return [(x_lu_pt, y_lu_pt, z_ll_pt)]
         if signs == [0, 0, 1, 0, 0, 0, 0, 0] or \
            signs == [1, 1, 0, 1, 1, 1, 1, 1]:
         #    lul
-            pt1 = Point(x_ul, node.y2, node.z1)
-            pt2 = Point(node.x1, y_ll, node.z1)
-            pt3 = Point(node.x1, node.y2, z_lu)
-            return [(pt1, pt2, pt3)]
+            return [(x_ul_pt, y_ll_pt, z_lu_pt)]
         if signs == [0, 0, 0, 1, 0, 0, 0, 0] or \
            signs == [1, 1, 1, 0, 1, 1, 1, 1]:
         #    luu
-            pt1 = Point(x_uu, node.y2, node.z2)
-            pt2 = Point(node.x1, y_lu, node.z2)
-            pt3 = Point(node.x1, node.y2, z_lu)
-            return [(pt1, pt2, pt3)]
+            return [(x_uu_pt, y_lu_pt, z_lu_pt)]
         if signs == [0, 0, 0, 0, 1, 0, 0, 0] or \
            signs == [1, 1, 1, 1, 0, 1, 1, 1]:
         #    ull
-            pt1 = Point(x_ll, node.y1, node.z1)
-            pt2 = Point(node.x2, y_ul, node.z1)
-            pt3 = Point(node.x2, node.y1, z_ul)
-            return [(pt1, pt2, pt3)]
+            return [(x_ll_pt, y_ul_pt, z_ul_pt)]
         if signs == [0, 0, 0, 0, 0, 1, 0, 0] or \
            signs == [1, 1, 1, 1, 1, 0, 1, 1]:
         #    ulu
-            pt1 = Point(x_lu, node.y1, node.z2)
-            pt2 = Point(node.x2, y_uu, node.z2)
-            pt3 = Point(node.x2, node.y1, z_ul)
-            return [(pt1, pt2, pt3)]
+            return [(x_lu_pt, y_uu_pt, z_ul_pt)]
         if signs == [0, 0, 0, 0, 0, 0, 1, 0] or \
            signs == [1, 1, 1, 1, 1, 1, 0, 1]:
         #    uul
-            pt1 = Point(x_ul, node.y2, node.z1)
-            pt2 = Point(node.x2, y_ul, node.z1)
-            pt3 = Point(node.x2, node.y2, z_uu)
-            return [(pt1, pt2, pt3)]
+            return [(x_ul_pt, y_ul_pt, z_uu_pt)]
         if signs == [0, 0, 0, 0, 0, 0, 0, 1] or \
            signs == [1, 1, 1, 1, 1, 1, 1, 0]:
         #    uuu
-            pt1 = Point(x_uu, node.y2, node.z2)
-            pt2 = Point(node.x2, y_uu, node.z2)
-            pt3 = Point(node.x2, node.y2, z_uu)
-            return [(pt1, pt2, pt3)]
+            return [(x_uu_pt, y_uu_pt, z_uu_pt)]
 
         # cases with single edge
-        if signs == [1, 0, 0, 0, 0, 0, 0, 0] or \
-           signs == [0, 1, 1, 1, 1, 1, 1, 1]:
+        if signs == [1, 0, 0, 0, 1, 0, 0, 0] or \
+           signs == [0, 1, 1, 1, 0, 1, 1, 1]:
         #    x_ll
-            pt1 = Point(x_ll, node.y1, node.z1)
-            pt2 = Point(node.x1, y_ll, node.z1)
-            pt3 = Point(node.x1, node.y1, z_ll)
-            return [(pt1, pt2, pt3)]
-        if signs == [0, 1, 0, 0, 0, 0, 0, 0] or \
-           signs == [1, 0, 1, 1, 1, 1, 1, 1]:
+            return [(y_ll_pt, z_ll_pt, y_ul_pt, z_ul_pt)]
+        if signs == [0, 1, 0, 0, 0, 1, 0, 0] or \
+           signs == [1, 0, 1, 1, 1, 0, 1, 1]:
         #    x_lu
-            pt1 = Point(x_lu, node.y1, node.z2)
-            pt2 = Point(node.x1, y_lu, node.z2)
-            pt3 = Point(node.x1, node.y1, z_ll)
-            return [(pt1, pt2, pt3)]
-        if signs == [0, 0, 1, 0, 0, 0, 0, 0] or \
-           signs == [1, 1, 0, 1, 1, 1, 1, 1]:
+            return [(y_ul_pt, z_ll_pt, y_uu_pt, z_ul_pt)]
+        if signs == [0, 0, 1, 0, 0, 0, 1, 0] or \
+           signs == [1, 1, 0, 1, 1, 1, 0, 1]:
         #    x_ul
-            pt1 = Point(x_ul, node.y2, node.z1)
-            pt2 = Point(node.x1, y_ll, node.z1)
-            pt3 = Point(node.x1, node.y2, z_lu)
-            return [(pt1, pt2, pt3)]
-        if signs == [0, 0, 0, 1, 0, 0, 0, 0] or \
-           signs == [1, 1, 1, 0, 1, 1, 1, 1]:
+            return [(y_ll_pt, z_lu_pt, y_ul_pt, z_uu_pt)]
+        if signs == [0, 0, 0, 1, 0, 0, 0, 1] or \
+           signs == [1, 1, 1, 0, 1, 1, 1, 0]:
         #    x_uu
-            pt1 = Point(x_uu, node.y2, node.z2)
-            pt2 = Point(node.x1, y_lu, node.z2)
-            pt3 = Point(node.x1, node.y2, z_lu)
-            return [(pt1, pt2, pt3)]
-        if signs == [0, 0, 0, 0, 1, 0, 0, 0] or \
+            return [(y_lu_pt, z_lu_pt, y_uu_pt, z_uu_pt)]
+        if signs == [1, 0, 0, 0, 1, 0, 0, 0] or \
            signs == [1, 1, 1, 1, 0, 1, 1, 1]:
         #    y_ll
-            pt1 = Point(x_ll, node.y1, node.z1)
-            pt2 = Point(node.x2, y_ul, node.z1)
-            pt3 = Point(node.x2, node.y1, z_ul)
-            return [(pt1, pt2, pt3)]
+            return [(x_ll_pt, z_ll_pt, z_ul_pt, z_lu_pt)]
         if signs == [0, 0, 0, 0, 0, 1, 0, 0] or \
            signs == [1, 1, 1, 1, 1, 0, 1, 1]:
         #    y_lu
-            pt1 = Point(x_lu, node.y1, node.z2)
-            pt2 = Point(node.x2, y_uu, node.z2)
-            pt3 = Point(node.x2, node.y1, z_ul)
-            return [(pt1, pt2, pt3)]
+            return [(x_lu_pt, z_ll_pt, x_uu_pt, z_lu_pt)]
         if signs == [0, 0, 0, 0, 0, 0, 1, 0] or \
            signs == [1, 1, 1, 1, 1, 1, 0, 1]:
         #    y_ul
-            pt1 = Point(x_ul, node.y2, node.z1)
-            pt2 = Point(node.x2, y_ul, node.z1)
-            pt3 = Point(node.x2, node.y2, z_uu)
-            return [(pt1, pt2, pt3)]
+            return [(x_ll_pt, z_ul_pt, x_ul_pt, z_uu_pt)]
         if signs == [0, 0, 0, 0, 0, 0, 0, 1] or \
            signs == [1, 1, 1, 1, 1, 1, 1, 0]:
         #    y_uu
-            pt1 = Point(x_uu, node.y2, node.z2)
-            pt2 = Point(node.x2, y_uu, node.z2)
-            pt3 = Point(node.x2, node.y2, z_uu)
-            return [(pt1, pt2, pt3)]
+            return [(x_ul_pt, z_ul_pt, x_uu_pt, z_uu_pt)]
         if signs == [0, 0, 0, 0, 1, 0, 0, 0] or \
            signs == [1, 1, 1, 1, 0, 1, 1, 1]:
         #    z_ll
-            pt1 = Point(x_ll, node.y1, node.z1)
-            pt2 = Point(node.x2, y_ul, node.z1)
-            pt3 = Point(node.x2, node.y1, z_ul)
-            return [(pt1, pt2, pt3)]
+            return [(x_ll_pt, y_ll_pt, x_lu_pt, y_lu_pt)]
         if signs == [0, 0, 0, 0, 0, 1, 0, 0] or \
            signs == [1, 1, 1, 1, 1, 0, 1, 1]:
         #    z_lu
-            pt1 = Point(x_lu, node.y1, node.z2)
-            pt2 = Point(node.x2, y_uu, node.z2)
-            pt3 = Point(node.x2, node.y1, z_ul)
-            return [(pt1, pt2, pt3)]
+            return [(x_ul_pt, y_ll_pt, x_uu_pt, y_lu_pt)]
         if signs == [0, 0, 0, 0, 0, 0, 1, 0] or \
            signs == [1, 1, 1, 1, 1, 1, 0, 1]:
         #    z_ul
-            pt1 = Point(x_ul, node.y2, node.z1)
-            pt2 = Point(node.x2, y_ul, node.z1)
-            pt3 = Point(node.x2, node.y2, z_uu)
-            return [(pt1, pt2, pt3)]
+            return [(x_ll_pt, y_ul_pt, x_lu_pt, y_uu_pt)]
         if signs == [0, 0, 0, 0, 0, 0, 0, 1] or \
            signs == [1, 1, 1, 1, 1, 1, 1, 0]:
         #    z_uu
-            pt1 = Point(x_uu, node.y2, node.z2)
-            pt2 = Point(node.x2, y_uu, node.z2)
-            pt3 = Point(node.x2, node.y2, z_uu)
-            return [(pt1, pt2, pt3)]
+            return [(x_ul_pt, y_ul_pt, x_uu_pt, y_uu_pt)]
+
+        # cases with two isolated corners
+        if signs == [1, 0, 0, 1, 0, 0, 0, 0] or \
+           signs == [0, 1, 1, 0, 1, 1, 1, 1]:
+        #    lll, luu
+            return [(x_ll_pt, y_ll_pt, z_ll_pt), (x_uu_pt, y_lu_pt, z_lu_pt)]
+        if signs == [1, 0, 0, 0, 0, 1, 0, 0] or \
+           signs == [0, 1, 1, 1, 1, 0, 1, 1]:
+        #    lll, ulu
+            return [(x_ll_pt, y_ll_pt, z_ll_pt), (x_lu_pt, y_uu_pt, z_ul_pt)]
+        if signs == [1, 0, 0, 0, 0, 0, 1, 0] or \
+           signs == [0, 1, 1, 1, 1, 1, 0, 1]:
+        #    lll, uul
+            return [(x_ll_pt, y_ll_pt, z_ll_pt), (x_ul_pt, y_ul_pt, z_uu_pt)]
+        if signs == [1, 0, 0, 0, 0, 0, 0, 1] or \
+           signs == [0, 1, 1, 1, 1, 1, 1, 0]:
+        #    lll, uuu
+            return [(x_ll_pt, y_ll_pt, z_ll_pt), (x_uu_pt, y_uu_pt, z_uu_pt)]
+
+        if signs == [0, 1, 1, 0, 0, 0, 0, 0] or \
+           signs == [1, 0, 0, 1, 1, 1, 1, 1]:
+        #    llu, lul
+            return [(x_lu_pt, y_lu_pt, z_ll_pt), (x_ul_pt, y_ll_pt, z_lu_pt)]
+        if signs == [0, 1, 0, 0, 1, 0, 0, 0] or \
+           signs == [1, 0, 1, 1, 0, 1, 1, 1]:
+        #    llu, ull
+            return [(x_lu_pt, y_lu_pt, z_ll_pt), (x_ll_pt, y_ul_pt, z_ul_pt)]
+        if signs == [0, 1, 0, 0, 0, 0, 1, 0] or \
+           signs == [1, 0, 1, 1, 1, 1, 0, 1]:
+        #    llu, uul
+            return [(x_lu_pt, y_lu_pt, z_ll_pt), (x_ul_pt, y_ul_pt, z_uu_pt)]
+        if signs == [0, 1, 0, 0, 0, 0, 0, 1] or \
+           signs == [1, 0, 1, 1, 1, 1, 1, 0]:
+        #    llu, uuu
+            return [(x_lu_pt, y_lu_pt, z_ll_pt), (x_uu_pt, y_uu_pt, z_uu_pt)]
+
+        if signs == [0, 1, 1, 0, 0, 0, 0, 0] or \
+           signs == [1, 0, 0, 1, 1, 1, 1, 1]:
+        #    lul, llu
+            return [(x_ul_pt, y_ll_pt, z_lu_pt), (x_lu_pt, y_lu_pt, z_ll_pt)]
+        if signs == [0, 0, 1, 0, 1, 0, 0, 0] or \
+           signs == [1, 1, 0, 1, 0, 1, 1, 1]:
+        #    lul, ull
+            return [(x_ul_pt, y_ll_pt, z_lu_pt), (x_ll_pt, y_ul_pt, z_ul_pt)]
+        if signs == [0, 0, 1, 0, 0, 1, 0, 0] or \
+           signs == [1, 1, 0, 1, 1, 0, 1, 1]:
+        #    lul, ulu
+            return [(x_ul_pt, y_ll_pt, z_lu_pt), (x_lu_pt, y_uu_pt, z_ul_pt)]
+        if signs == [0, 0, 1, 0, 0, 0, 0, 1] or \
+           signs == [1, 1, 0, 1, 1, 1, 1, 0]:
+        #    lul, uuu
+            return [(x_ul_pt, y_ll_pt, z_lu_pt), (x_uu_pt, y_uu_pt, z_uu_pt)]
 
 
         return None
@@ -321,26 +290,10 @@ class Node:
             self.z1 = min(self.z1, z)
             self.z2 = max(self.z2, z)
 
-    def _get_box_vertices(self):
-        v1 = Point(self.x1, self.y1, self.z1)
-        v2 = Point(self.x1, self.y1, self.z2)
-        v3 = Point(self.x1, self.y2, self.z1)
-        v4 = Point(self.x1, self.y2, self.z2)
-        v5 = Point(self.x2, self.y1, self.z1)
-        v6 = Point(self.x2, self.y1, self.z2)
-        v7 = Point(self.x2, self.y2, self.z1)
-        v8 = Point(self.x2, self.y2, self.z2)
-        return [v1,v2,v3,v4,v5,v6,v7,v8]
-
 
     def _get_median(self, points, axis):
         vec = [pt.position[axis] for pt in points]
-        #return np.median(vec)
-
-        if (axis == 0): return (self.x1 + self.x2)/2
-        if (axis == 1): return (self.y1 + self.y2)/2
-        if (axis == 2): return (self.z1 + self.z2)/2
-
+        return np.median(vec)
 
     def _partition(self, points, value, axis):
         lower = []
@@ -439,9 +392,9 @@ class Node:
 
     def draw(self, axis):
         # Avoid overlapping lines in visualization
-        dx = 0  #(self.x2 - self.x1) / 100
-        dy = 0  #(self.y2 - self.y1) / 100
-        dz = 0  #(self.z2 - self.z1) / 100
+        dx = (self.x2 - self.x1) / 100
+        dy = (self.y2 - self.y1) / 100
+        dz = (self.z2 - self.z1) / 100
 
         front_face_x = [self.x1-dx, self.x2+dx, self.x2+dx, self.x1-dx, self.x1-dx]
         front_face_y = [self.y1-dy, self.y1-dy, self.y2+dy, self.y2+dy, self.y1-dy]
