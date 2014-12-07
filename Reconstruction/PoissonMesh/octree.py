@@ -2,6 +2,7 @@ import numpy as np
 from point import Point
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import axes3d
+import triTable
 
 
 class Octree:
@@ -60,6 +61,7 @@ class Octree:
         return contour
 
     def _compute_node_contour(self, f, node):
+        # Cite: http://paulbourke.net/geometry/polygonise/
         f_lll = f(node.x1, node.y1, node.z1)
         f_llu = f(node.x1, node.y1, node.z2)
         f_lul = f(node.x1, node.y2, node.z1)
@@ -69,14 +71,28 @@ class Octree:
         f_uul = f(node.x2, node.y2, node.z1)
         f_uuu = f(node.x2, node.y2, node.z2)
 
-        signs = [f_lll > 0, f_llu > 0, f_lul > 0, f_luu > 0,
-                 f_ull > 0, f_ulu > 0, f_uul > 0, f_uuu > 0]
+        # The function evaluated at each of the points
+        points = {}
+        points[0] = f_lul
+        points[1] = f_uul
+        points[2] = f_ull
+        points[3] = f_lll
+        points[4] = f_luu
+        points[5] = f_uuu
+        points[6] = f_ulu
+        points[7] = f_llu
+
+        case = self._compute_case(points)
+
+        # Size of the cube (rectangular prism)
 
         dx = node.x2 - node.x1
         dy = node.y2 - node.y1
         dz = node.z2 - node.z1
 
         # edges
+        # x_ll is the edge along the x axis where y and z are the lower of their two possible values
+
         x_ll = node.x1 + f_lll / (f_lll - f_ull) * dx
         x_lu = node.x1 + f_lul / (f_llu - f_ulu) * dx
         x_ul = node.x1 + f_ull / (f_lul - f_uul) * dx
@@ -91,6 +107,20 @@ class Octree:
         z_lu = node.z1 + f_lul / (f_lul - f_luu) * dz
         z_ul = node.z1 + f_ull / (f_ull - f_ulu) * dz
         z_uu = node.z1 + f_uul / (f_uul - f_uuu) * dz
+
+        edges = {}
+        edges[0] = x_ul
+        edges[1] = y_ul
+        edges[2] = x_ll
+        edges[3] = y_ll
+        edges[4] = x_uu
+        edges[5] = y_uu
+        edges[6] = x_lu
+        edges[7] = y_lu
+        edges[8] = z_lu
+        edges[9] = z_uu
+        edges[10] = z_ul
+        edges[11] = z_ll
 
         x_ll_pt = Point(x_ll, node.y1, node.z1)
         x_lu_pt = Point(x_lu, node.y1, node.z2)
@@ -107,147 +137,41 @@ class Octree:
         z_ul_pt = Point(node.x2, node.y1, z_ul)
         z_uu_pt = Point(node.x2, node.y2, z_uu)
 
-        # 256 cases!!!
-        # 128 after taking out symmetric cases
+        # Given the function evaluated at the two endpoints of an edge, where does the function equal zero along that edge. If one endpoint is positive and the other is negative, the intersection point is between the endpoints. Otherwise, it is outside the segment. We solve for all of them for simplicity.
 
-        # cases with single corner
-        if signs == [1, 0, 0, 0, 0, 0, 0, 0] or \
-           signs == [0, 1, 1, 1, 1, 1, 1, 1]:
-        #    lll
-            return [(x_ll_pt, y_ll_pt, z_ll_pt)]
-        if signs == [0, 1, 0, 0, 0, 0, 0, 0] or \
-           signs == [1, 0, 1, 1, 1, 1, 1, 1]:
-        #    llu
-            return [(x_lu_pt, y_lu_pt, z_ll_pt)]
-        if signs == [0, 0, 1, 0, 0, 0, 0, 0] or \
-           signs == [1, 1, 0, 1, 1, 1, 1, 1]:
-        #    lul
-            return [(x_ul_pt, y_ll_pt, z_lu_pt)]
-        if signs == [0, 0, 0, 1, 0, 0, 0, 0] or \
-           signs == [1, 1, 1, 0, 1, 1, 1, 1]:
-        #    luu
-            return [(x_uu_pt, y_lu_pt, z_lu_pt)]
-        if signs == [0, 0, 0, 0, 1, 0, 0, 0] or \
-           signs == [1, 1, 1, 1, 0, 1, 1, 1]:
-        #    ull
-            return [(x_ll_pt, y_ul_pt, z_ul_pt)]
-        if signs == [0, 0, 0, 0, 0, 1, 0, 0] or \
-           signs == [1, 1, 1, 1, 1, 0, 1, 1]:
-        #    ulu
-            return [(x_lu_pt, y_uu_pt, z_ul_pt)]
-        if signs == [0, 0, 0, 0, 0, 0, 1, 0] or \
-           signs == [1, 1, 1, 1, 1, 1, 0, 1]:
-        #    uul
-            return [(x_ul_pt, y_ul_pt, z_uu_pt)]
-        if signs == [0, 0, 0, 0, 0, 0, 0, 1] or \
-           signs == [1, 1, 1, 1, 1, 1, 1, 0]:
-        #    uuu
-            return [(x_uu_pt, y_uu_pt, z_uu_pt)]
+        zeros = {}
+        zeros[0] = x_ul_pt
+        zeros[1] = y_ul_pt
+        zeros[2] = x_ll_pt
+        zeros[3] = y_ll_pt
+        zeros[4] = x_uu_pt
+        zeros[5] = y_uu_pt
+        zeros[6] = x_lu_pt
+        zeros[7] = y_lu_pt
+        zeros[8] = z_lu_pt
+        zeros[9] = z_uu_pt
+        zeros[10] = z_ul_pt
+        zeros[11] = z_ll_pt
 
-        # cases with single edge
-        if signs == [1, 0, 0, 0, 1, 0, 0, 0] or \
-           signs == [0, 1, 1, 1, 0, 1, 1, 1]:
-        #    x_ll
-            return [(y_ll_pt, z_ll_pt, y_ul_pt, z_ul_pt)]
-        if signs == [0, 1, 0, 0, 0, 1, 0, 0] or \
-           signs == [1, 0, 1, 1, 1, 0, 1, 1]:
-        #    x_lu
-            return [(y_ul_pt, z_ll_pt, y_uu_pt, z_ul_pt)]
-        if signs == [0, 0, 1, 0, 0, 0, 1, 0] or \
-           signs == [1, 1, 0, 1, 1, 1, 0, 1]:
-        #    x_ul
-            return [(y_ll_pt, z_lu_pt, y_ul_pt, z_uu_pt)]
-        if signs == [0, 0, 0, 1, 0, 0, 0, 1] or \
-           signs == [1, 1, 1, 0, 1, 1, 1, 0]:
-        #    x_uu
-            return [(y_lu_pt, z_lu_pt, y_uu_pt, z_uu_pt)]
-        if signs == [1, 0, 0, 0, 1, 0, 0, 0] or \
-           signs == [1, 1, 1, 1, 0, 1, 1, 1]:
-        #    y_ll
-            return [(x_ll_pt, z_ll_pt, z_ul_pt, z_lu_pt)]
-        if signs == [0, 0, 0, 0, 0, 1, 0, 0] or \
-           signs == [1, 1, 1, 1, 1, 0, 1, 1]:
-        #    y_lu
-            return [(x_lu_pt, z_ll_pt, x_uu_pt, z_lu_pt)]
-        if signs == [0, 0, 0, 0, 0, 0, 1, 0] or \
-           signs == [1, 1, 1, 1, 1, 1, 0, 1]:
-        #    y_ul
-            return [(x_ll_pt, z_ul_pt, x_ul_pt, z_uu_pt)]
-        if signs == [0, 0, 0, 0, 0, 0, 0, 1] or \
-           signs == [1, 1, 1, 1, 1, 1, 1, 0]:
-        #    y_uu
-            return [(x_ul_pt, z_ul_pt, x_uu_pt, z_uu_pt)]
-        if signs == [0, 0, 0, 0, 1, 0, 0, 0] or \
-           signs == [1, 1, 1, 1, 0, 1, 1, 1]:
-        #    z_ll
-            return [(x_ll_pt, y_ll_pt, x_lu_pt, y_lu_pt)]
-        if signs == [0, 0, 0, 0, 0, 1, 0, 0] or \
-           signs == [1, 1, 1, 1, 1, 0, 1, 1]:
-        #    z_lu
-            return [(x_ul_pt, y_ll_pt, x_uu_pt, y_lu_pt)]
-        if signs == [0, 0, 0, 0, 0, 0, 1, 0] or \
-           signs == [1, 1, 1, 1, 1, 1, 0, 1]:
-        #    z_ul
-            return [(x_ll_pt, y_ul_pt, x_lu_pt, y_uu_pt)]
-        if signs == [0, 0, 0, 0, 0, 0, 0, 1] or \
-           signs == [1, 1, 1, 1, 1, 1, 1, 0]:
-        #    z_uu
-            return [(x_ul_pt, y_ul_pt, x_uu_pt, y_uu_pt)]
+        face_indices = triTable.tri_table[case]
+        assert len(face_indices) % 3 == 0
+        face_count = len(face_indices) / 3
+        face_vec = []
+        for index in range(face_count):
+            i1 = face_indices[index]
+            i2 = face_indices[index+1]
+            i3 = face_indices[index+2]
+            face = (zeros[i1], zeros[i2], zeros[i3])
+            face_vec.append(face)
 
-        # cases with two isolated corners
-        if signs == [1, 0, 0, 1, 0, 0, 0, 0] or \
-           signs == [0, 1, 1, 0, 1, 1, 1, 1]:
-        #    lll, luu
-            return [(x_ll_pt, y_ll_pt, z_ll_pt), (x_uu_pt, y_lu_pt, z_lu_pt)]
-        if signs == [1, 0, 0, 0, 0, 1, 0, 0] or \
-           signs == [0, 1, 1, 1, 1, 0, 1, 1]:
-        #    lll, ulu
-            return [(x_ll_pt, y_ll_pt, z_ll_pt), (x_lu_pt, y_uu_pt, z_ul_pt)]
-        if signs == [1, 0, 0, 0, 0, 0, 1, 0] or \
-           signs == [0, 1, 1, 1, 1, 1, 0, 1]:
-        #    lll, uul
-            return [(x_ll_pt, y_ll_pt, z_ll_pt), (x_ul_pt, y_ul_pt, z_uu_pt)]
-        if signs == [1, 0, 0, 0, 0, 0, 0, 1] or \
-           signs == [0, 1, 1, 1, 1, 1, 1, 0]:
-        #    lll, uuu
-            return [(x_ll_pt, y_ll_pt, z_ll_pt), (x_uu_pt, y_uu_pt, z_uu_pt)]
+        return face_vec
 
-        if signs == [0, 1, 1, 0, 0, 0, 0, 0] or \
-           signs == [1, 0, 0, 1, 1, 1, 1, 1]:
-        #    llu, lul
-            return [(x_lu_pt, y_lu_pt, z_ll_pt), (x_ul_pt, y_ll_pt, z_lu_pt)]
-        if signs == [0, 1, 0, 0, 1, 0, 0, 0] or \
-           signs == [1, 0, 1, 1, 0, 1, 1, 1]:
-        #    llu, ull
-            return [(x_lu_pt, y_lu_pt, z_ll_pt), (x_ll_pt, y_ul_pt, z_ul_pt)]
-        if signs == [0, 1, 0, 0, 0, 0, 1, 0] or \
-           signs == [1, 0, 1, 1, 1, 1, 0, 1]:
-        #    llu, uul
-            return [(x_lu_pt, y_lu_pt, z_ll_pt), (x_ul_pt, y_ul_pt, z_uu_pt)]
-        if signs == [0, 1, 0, 0, 0, 0, 0, 1] or \
-           signs == [1, 0, 1, 1, 1, 1, 1, 0]:
-        #    llu, uuu
-            return [(x_lu_pt, y_lu_pt, z_ll_pt), (x_uu_pt, y_uu_pt, z_uu_pt)]
-
-        if signs == [0, 1, 1, 0, 0, 0, 0, 0] or \
-           signs == [1, 0, 0, 1, 1, 1, 1, 1]:
-        #    lul, llu
-            return [(x_ul_pt, y_ll_pt, z_lu_pt), (x_lu_pt, y_lu_pt, z_ll_pt)]
-        if signs == [0, 0, 1, 0, 1, 0, 0, 0] or \
-           signs == [1, 1, 0, 1, 0, 1, 1, 1]:
-        #    lul, ull
-            return [(x_ul_pt, y_ll_pt, z_lu_pt), (x_ll_pt, y_ul_pt, z_ul_pt)]
-        if signs == [0, 0, 1, 0, 0, 1, 0, 0] or \
-           signs == [1, 1, 0, 1, 1, 0, 1, 1]:
-        #    lul, ulu
-            return [(x_ul_pt, y_ll_pt, z_lu_pt), (x_lu_pt, y_uu_pt, z_ul_pt)]
-        if signs == [0, 0, 1, 0, 0, 0, 0, 1] or \
-           signs == [1, 1, 0, 1, 1, 1, 1, 0]:
-        #    lul, uuu
-            return [(x_ul_pt, y_ll_pt, z_lu_pt), (x_uu_pt, y_uu_pt, z_uu_pt)]
-
-
-        return None
+    def _compute_case(self, points):
+        case = 0
+        for index, value in points.items():
+            if value < 0:
+                case += 2**index
+        return case
 
 
 class Node:

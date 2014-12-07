@@ -19,7 +19,7 @@ apt-get install meshlab
 If the pictures are not already in jpg format:
 for f in *.png
 do
-convert $f $f.jpg
+convert $
 rm $f
 done
 

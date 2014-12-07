@@ -204,11 +204,12 @@ def get_circle():
 
 if __name__ == '__main__':
     # points = []
+    points = get_circle()
     # for _ in xrange(1000):
     #     x, y = np.random.randint(0, 100, 2)
     #     pt = Point(x, y, 0)
     #     points.append(pt)
-    points = get_circle()
     quad = Quadtree(points, 4)
-    # quad.display()
-    print len(quad._get_leaves())
+    quad.compute_contour()
+    quad.display()
+    # print len(quad._get_leaves())

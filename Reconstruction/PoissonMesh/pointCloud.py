@@ -40,7 +40,7 @@ class PointCloud:
             covar /= k
             evalues, evectors = np.linalg.eig(covar)
             pt.normal = evectors[:, np.argmin(evalues)]
-        self._orient_normals(k)
+        return self._orient_normals(k)
 
     def _orient_normals(self, k):
         print 'Orienting normals'
@@ -65,7 +65,6 @@ class PointCloud:
                 prev = self.nearest_neighbors(pt, 1, parents.keys())[0]
                 parents[pt] = prev
             if np.dot(prev.normal, pt.normal) < 0:
-                print 'flipping'
                 pt.normal *= -1
 
             neighbors = self.nearest_neighbors(pt, k)
@@ -76,6 +75,7 @@ class PointCloud:
                     if dist < old_dist:
                         parents[pt2] = pt
                         heap.update_key(dist, pt2)
+        return parents
 
 
     def _construct_mesh(self, k):
@@ -101,21 +101,30 @@ class PointCloud:
         axis.set_xlabel('X')
         axis.set_ylabel('Y')
         axis.set_zlabel('Z')
-        axis.set_xlim([0,1])
-        axis.set_ylim([0,1])
-        axis.set_zlim([0,1])
+        min_x = np.min([pt.position[0] for pt in self.points])
+        min_y = np.min([pt.position[1] for pt in self.points])
+        min_z = np.min([pt.position[2] for pt in self.points])
+        max_x = np.max([pt.position[0] for pt in self.points])
+        max_y = np.max([pt.position[1] for pt in self.points])
+        max_z = np.max([pt.position[2] for pt in self.points])
+        axis.set_xlim([min_x, max_x])
+        axis.set_ylim([min_y, max_y])
+        axis.set_zlim([min_z, max_z])
         plt.show()
 
 
 def make_sphere():
     r = 1
     pc = PointCloud()
-    for phi in np.linspace(0, np.pi, 10):
-        for theta in np.linspace(0, 2*np.pi, 10):
+    for phi in np.linspace(0, np.pi, 20):
+        for theta in np.linspace(0, 2*np.pi, 20):
             z = r * np.cos(phi)
             x = r * np.sin(phi) * np.cos(theta)
             y = r * np.sin(phi) * np.sin(theta)
-            pc.add_point(x,y,z)
+            dx = (random.random() - 0.5)/ 10
+            dy = (random.random() - 0.5)/ 10
+            dz = (random.random() - 0.5)/ 10
+            pc.add_point(x+dx,y+dy,z+dz)
     return pc
 
 def make_plane():
@@ -132,9 +141,24 @@ def null(M):
     mask = s < 1e-15
     return v[mask]
 
+def display_mst(pc):
+    parents = pc.compute_normals(10)
+    fig = plt.figure()
+    axis = fig.gca(projection='3d')
+    cmap = plt.get_cmap('jet')
+    for (pt, pt2) in parents.items():
+        d11 = np.dot(pt.normal, pt.normal)
+        d22 = np.dot(pt2.normal, pt2.normal)
+        d12 = np.dot(pt.normal, pt2.normal)
+        weight = np.abs(d12 / (d11 * d22))**4
+        color = cmap(weight)
+        axis.plot(*zip(pt.position, pt2.position), color=color)
+    plt.show()
+
 
 if __name__ == '__main__':
-    pc = make_plane()
-    random.shuffle(pc.points)
-    pc.compute_normals(10)
-    pc.display(normals=True)
+    pc = make_sphere()
+    display_mst(pc)
+    # random.shuffle(pc.points)
+    # parents = pc.compute_normals(10)
+    # pc.display(normals=True)
