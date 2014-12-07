@@ -3,7 +3,7 @@
 
 \begin{document}
 \title{Visualizing Multi-View Stereo}
-\author{Andrew Morran, Ben Eysenbach}
+\author{Andrew Moran, Ben Eysenbach}
 \date{December 9, 2014}
 
 \frame{\titlepage}
@@ -44,10 +44,19 @@
 \end{frame}
 
 \begin{frame}{Normal Estimation}
-  % image of MST
+  \begin{Huge}
+    $$\text{Normals} \leftrightarrow \text{Surface}?$$
+  \end{Huge}
+  
+  Normal is smallest eigenvector of covariance matrix.
+  
+  Find the $k$ nearest neighbors, and compute the covariance matrix. Then, the eigenvector associated with the smallest eigenvalue is taken to be the normal.
+  
+  
 \end{frame}
 
 \begin{frame}{Constitent Normal Orientation}
+  \includegraphics[width=\textwidth]{mst.png}
 \end{frame}
 
 \begin{frame}{Signed Distance}
