@@ -1,5 +1,5 @@
 \documentclass{beamer}
-\usepackage{graphicx, float}
+\usepackage{graphicx, float, movie15, hyperref}
 
 \begin{document}
 \title{Visualizing Multi-View Stereo}
@@ -10,70 +10,116 @@
 
 \section{Introduction}
 
-\begin{frame}{Overview}
+\begin{frame}{Motivation}
+  Pipelines are hard to construct.
+  
   \begin{center}
-    \includegraphics[width=0.5\textwidth]{rift.jpg}
+  \begin{tabular}{ccccc}
+    & & Algorithm, & & \\ 
+    & & Parameters & & \\ 
+    & & $\downarrow$ & &  \\ 
+    Input & $\rightarrow$ & $\blacksquare$ & $\rightarrow$ & Output \\ 
+  \end{tabular} 
+  \end{center}
+  
+\end{frame}
+
+\begin{frame}{Motivation}
+  Better:
+  
+  \begin{center}
+    \begin{tabular}{ccccccccc}
+      & & Algorithm, & & & & Algorithm, & & \\ 
+      & & Parameters & & & & Parameters & & \\ 
+      & & $\downarrow$ & & & & $\downarrow$ & & \\ 
+      Input & $\rightarrow$ & $\blacksquare$ & $\rightarrow$ & ... & $\rightarrow$ & $\blacksquare$ & $\rightarrow$ & Output \\ 
+    \end{tabular} 
   \end{center}
 
-  Current technique for stereo reconstruction are complex. To help understand how different reconstruction pipelines work, we propose a novel visualization of the reconstruction process using an Oculus Rift. Given that stereo reconstruction is a series of manipulations on 3D data structures, it makes sense to be able to visualize the process in 3D.
 \end{frame}
 
+\begin{frame}{Evaluating each Step}
+  How to evaluate the output of each step?\\
+  
+  Quantitative:
+  \begin{itemize}
+    \item Great if ground truth is known
+    \item Harder if you need to construct an error function
+    \item Algorithms can fail in different ways
+  \end{itemize}
+  
+  Qualitative:
+  \begin{itemize}
+    \item Great for debugging and comparing output
+    \item Great for 2D operations
+    \item Hard for 3D operations
+  \end{itemize}
+  
+\end{frame}  
+  
+\section{Feature Matching}
 
-\begin{frame}{Overview}
-  % one image per section
-  \includegraphics[width=\textwidth]{pipeline2.png}
-  \tableofcontents  
+\begin{frame}{Feature Matching}
+
+  \centering\includegraphics[height=.4\textheight]{Images/sift.jpg}
+
+  \begin{centering}
+  \includegraphics[height=.4\textheight]{Images/panorama.jpg}
+  \end{centering}
 \end{frame}
 
-\section{Pose Estimation}
-
-\begin{frame}{Bundle Adjustment and Sparse Reconstruction}
-\end{frame}
-
-\section{Dense Reconstruction}
-\begin{frame}{Dense Reconstruction}
-  PMVS
-\end{frame}
-
-\section{Surface Reconstruction}
-\begin{frame}{Quadtrees}
-  \includegraphics[width=\textwidth]{quadtree.png}
-\end{frame}
-\begin{frame}{Octrees}
-  \includegraphics[width=\textwidth]{octree.png}
+\begin{frame}{Point Cloud}
+  \begin{columns}
+    \column{.5\textwidth}
+    \includegraphics[width=\textwidth]{Images/point_cloud.png}
+    \column{.5\textwidth}
+    \includegraphics[width=\textwidth]{Images/bunny_dense.png}
+  \end{columns}
 \end{frame}
 
 \begin{frame}{Normal Estimation}
-  \begin{Huge}
-    $$\text{Normals} \leftrightarrow \text{Surface}?$$
-  \end{Huge}
-  
-  Normal is smallest eigenvector of covariance matrix.
-  
-  Find the $k$ nearest neighbors, and compute the covariance matrix. Then, the eigenvector associated with the smallest eigenvalue is taken to be the normal.
-  
+  \begin{columns}
+    \column{.5\textwidth}
+  \includegraphics[width=\textwidth]{Images/normals.png}
+    \column{.5\textwidth}
+    \includegraphics[width=\textwidth]{Images/3d_normals.png}
+  \end{columns}
   
 \end{frame}
 
-\begin{frame}{Constitent Normal Orientation}
-  \includegraphics[width=\textwidth]{mst.png}
+\begin{frame}{Spatial Data Structures}
+    \includegraphics[width=\textwidth]{Images/bunny_ortho_octree6.png}
 \end{frame}
 
-\begin{frame}{Signed Distance}
+\begin{frame}{Spatial Data Structures}
+    \includegraphics[width=\textwidth]{Images/bunny_front_octree6.png}
 \end{frame}
 
-\begin{frame}{Poisson Methods}
-  % image of indicator function
-\end{frame}
 
 \begin{frame}{Marching Cubes}
-  % image of marching squares
+  \begin{columns}
+    \column{.5\textwidth}
+    \includegraphics[width=\textwidth]{Images/marching_squares.png}
+    \column{.5\textwidth}
+    \includegraphics[width=\textwidth]{Images/bunny_ear_octreeCubesMesh.png}
+  \end{columns}
 \end{frame}
 
-\section{Conclusion}
+\begin{frame}{Surface Reconstruction}
+  \begin{columns}
+    \column{.5\textwidth}
+    \includegraphics[width=\textwidth]{Images/quadtree.png}
+    \column{.5\textwidth}
+    \includegraphics[width=\textwidth]{Images/bunny_front_meshReg.png}
+  \end{columns}
+\end{frame}
+
 
 \begin{frame}{Results}
-  % Video of results}
+  % screenshot
+  \includegraphics[width=\textwidth]{Images/bunny_side_meshOctree.png}
+  
+  \url{http://google.com}
 \end{frame}
 
 \begin{frame}{Thank You}
