@@ -40,20 +40,37 @@ MIT, \textit{Class of 2017}\\
 
 %%%%%%%%% ABSTRACT
 \begin{abstract}
-   We propose a novel approach to visualizing Multi-View Stereo reconstruction pipelines. We demonstrate how an Oculus Rift can be used to visualize the reconstruction process, allowing researchers to better understand how existing reconstruction algorithms work and where they fail.
+   We propose a novel approach to visualizing computer vision pipelines. We demonstrate how an Oculus Rift can be used to visualize the output of various spatial algorithms, allowing researchers to better understand how existing algorithms work and where they fail. We demonstrate our method on a multiview-stereo pipeline.
 \end{abstract}
 
 %%%%%%%%% BODY TEXT
 \section{Introduction}
-Multiview stereo pipelines are complex. Usually east step is visualized in 2D. Sometime the output is viewed in 3D. Regardless, it is difficult to see the effect of small changes to the pipeline if you can only look at the final reconstructed scene. When the pipeline fails entirely, being able to visualize it step by step allows users to figure out which step is failing.
+Computer vision pipelines are complex. Configuring one to work well for any given tasks requires subdividing the pipeline into smaller processes, choosing which algorithm to use for each process, and then tuning parameters for each algorithm.
 
-\section{Related Work}
-Phototourism
+% Black box approach - impossible to get anywhere
+Once a pipeline has been compiled, it is very difficult to figure out how changes to it will affect performance. Thus, most researchers visualize the output of each step of their pipeline. This lets them decouple the system, and choose optimal algorithms and parameters for each step individually. Evaluating each step can be done quantitatively, by looking at some error function or comparing to ground truth, or qualitatively, through visualization.
+
+\section{Current Approaches}
+
+\subsection{Quantitative Methods}
+
+Qualitative approaches usually work best when ground truth values are known. Then, the difference between the algorithm output and the ground truth tells you how well the algorithm performed. Without ground truth data, you have to construct an error function which somehow encapsulates what a `good' output looks like. This technique works sometimes, but often there are outputs which are the error function rates highly but nonetheless are not close to the desired output. This can be exacerbated because these error functions are often based on the same assumptions that the underlaying algorithm is based on.
+
+Even when the ground truth is known, algorithms which perform poorly (according to some metric) may do so because of different reasons. In this case, it may be possible to take ideas from both and combine them to create a high performing algorithm. However, only looking at the (low) performance according to some metric, this would be impossible to do.
+
+\subsection{Qualitative Methods}
+
+Qualitative approaches to evaluating algorithms can work in some scenarios where quantitative approaches fail. By visualizing the output of you algorithm, you can see where it fails, and reason about why it does so.
+
+Existing techniques for visualizing the output of algorithm which operate in two dimensions work well. For example, it is easy to evaluate the performance of panorama stitching by viewing the constituent images superimposed on top of each other.
+
+For algorithms which operate in three dimensions, such as stereo reconstruction, it can be difficult to understand the performance of the algorithm when visualized in two dimensions. Using software which allows researchers to manipulate a 3D model of the out helps, but information is still lost when projecting the 3D output to a two dimensional screen.
+
 
 \section{Visualization}
-We give methods for visualizing each step in the reconstruction pipeline: camera pose estimation, dense reconstruction, and surface reconstruction. 
+We propose visualizing a pipeline using a 3D virtual reality display. Our work was done using an Oculus Rift, but the techniques described would work equally well for other 3D displays.
 
-Generally, these visualization techniques are helpful for debugging, when ground truth data is unknown, and for choosing `magic parameters' for algorithms.
+We use a multi-view stereo pipeline as an example with which to describe our approach to visualization. Within this pipeline, we highlight camera pose estimation, dense reconstruction, and surface reconstruction. 
 
 \subsection{Camera Pose Estimation}
 
@@ -68,17 +85,33 @@ Feature matching doesn't rely on the 3D geometry of the scene, so it doesn't mak
 
 \subsubsection{Bundle Adjustment}
 
+\begin{figure}[t]
+  \begin{center}
+    \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+    %\includegraphics[width=0.8\linewidth]{egfigure.eps}
+  \end{center}
+  \caption{Example of sparse reconstruction}
+  \label{fig:long}
+  \label{fig:onecol}
+\end{figure}
+
 Now that we have correspondence points, we want to compute a homography relating one image to another. If we only wanted to find the orientation of one camera relative to another, we could use RANSAC to fit a homography (with the Discrete Linear Transform).\cite{ransac} However, if we only found the optimal pairwise relative positions, they probably would not be globally consistent.
 
 Instead, we want to find the \emph{global} optimal camera positions. One approach, Bundle Adjustment, incrementally alters the positions of the cameras and feature points to minimize \emph{reprojective error}. This process can be seen as minimizing a series of nonlinear equations; the Levenberg Marquardt Algorithm for nonlinear least-squares is commonly used as a subroutine. At the end of this process, we have a calibration matrix for each camera, relating the pose of each camera to a global coordinate system, as well as a small set of feature points and their positions in the global coordinate system.\cite{snavely, sba}
-
-% write out the math here?
 
 The output of this process can be difficult to evaluate quantitatively. We can look at the reprojective error of the optimal locations, but that can be difficult to comprehend because it depends on the type of input (image resolution, image scale) as well as how feature matching was performed. If ground truth is known, output of Bundle Adjustment can be compared against it. However, given how few datasets are equipped with camera poses, only verifying your algorithm on one of these risks `overfitting.'
 
 Viewing the camera poses and feature points in 3D solves many of these problems. It is easy for humans to figure out how images were taken with respect to one another. One reason is that humans know prior information on how likely certain types of scenes are. If they are put virtual 3D environment displaying camera poses and feature points, it is easy to check that the orientations and locations are consistent with the input images. 
 
 \subsection{Dense Reconstruction}
+
+\begin{figure}[t]
+  \begin{center}
+    \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+    %\includegraphics[width=0.8\linewidth]{egfigure.eps}
+  \end{center}
+  \caption{Example of dense reconstruction}
+\end{figure}
 
 We can now reconstruct the scene from calibrated cameras. We want to find eventually output a scene which is \emph{photo consistent}. Common approaches to this problem include: (1) building up a scene from points whose locations are found by triangulating between images; (2) starting with a volume which encloses the region of interest, and removing \emph{voxels} which are not photoconsistent; and (3) generating stereo depth maps for pairs of images, and then fusing them together.\cite{furukawa}
 
@@ -87,11 +120,30 @@ Similar to with Bundle Adjustment, it can be difficult to evaluate the output of
 \subsection{Surface Reconstruction}
 Many multi-view stereo algorithms output a set of points which lie on the surface of objects in the scene. These points can be analyzed at this stage, but it is often preferable to reconstruct the 3D surface(s) from which the points were sampled. This sort of problem also arises when analyzing LIDAR scans.
 
-This can be viewed as an optimization problem in which the overall goal is to minimize a global energy function. This function often enforces a smoothness constraint and penalizes the distance between points and the mesh.\cite{mesh_opt}  Two common approaches to solve this problem include (1) interpolating the points with computational geometry and (2) constructing implicit functions to fit the data.
+We used our visualization technique to compare two surface reconstruction algorithms on the same input camera calibration: Signed Distance Methods and Poisson Methods.\cite{hoppe1992surface, poisson} Both estimate normals for every point in the point cloud and then construct a function which is positive inside the object and negative outside the object. The surface where the function is zero is extracted, and taken to be the surface of the object.
 
-We used out visualization technique to compare two surface reconstruction algorithms on the same input camera calibration. The two methods were Hoppe 92 and Poisson Surface. We choose these because XXX. We hoped to see XXX. In fact, when we finished, that was exactly what we saw.
+
+\subsubsection{Octree Representation}
+
+\begin{figure}[t]
+  \begin{center}
+    \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+    %\includegraphics[width=0.8\linewidth]{egfigure.eps}
+  \end{center}
+  \caption{Picture of octree}
+\end{figure}
+
+Before attempting to reconstruct the surface, we need a convenient data structure for storing points. Multi-dimensional trees such as octrees and kd-trees are frequently used because they can quickly find the nearest neighbors to a given point.\cite{poisson} Visualizing and reasoning about these spatial data structures is much easier when seen through the Rift.
 
 \subsubsection{Normal Estimation}
+
+\begin{figure}[t]
+  \begin{center}
+    \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+    %\includegraphics[width=0.8\linewidth]{egfigure.eps}
+  \end{center}
+  \caption{picture of pointcloud with normals}
+\end{figure}
 
 Many surface reconstruction methods require that each point has an estimated normal. This presents a Chicken-and-Egg scenario: to construct a surface you need normals; however, to find the normals, you to know the underlying surface.
 
@@ -103,20 +155,35 @@ Similar to previous steps in the pipeline, it is easier to evaluate the orientat
 
 %ADD ANOTHER TWO SENTENCES OF EXPLANATION
 
-\subsubsection{Octree Representation}
+\subsubsection{Function Construction}
 
-\subsubsection{Signed Distance Methods}
+Both methods construct a function $V: \mathbb{R}^3 \rightarrow \mathbb{R}$ which is positive inside the object and negative outside the object.
 
-\cite{surface_review, hoppe1992surface}
+In Signed Distance methods\cite{hoppe1992surface}, to evaluate $V$ at a point $p$, we find the $k$ nearest points to $p$. Each neighboring point and its normal define a plane. We check if $p$ lies on the positive or negative side of this plane, and return the weighted average.\cite{surface_review, hoppe1992surface}
 
-\subsubsection{Poisson Methods}
+In Poisson methods\cite{poisson}, function fitting is phrased as a solution to a Poisson equation: $\nabla V(p) = p.normal$.\cite{surface_review, poisson}
 
-\cite{surface_review, poisson}
+\subsubsection{Computing the Zero-Surface}
 
-\section{Experiments}
-% do we even need this section?
+\begin{figure}[t]
+  \begin{center}
+    \fbox{\rule{0pt}{2in} \rule{0.9\linewidth}{0pt}}
+    %\includegraphics[width=0.8\linewidth]{egfigure.eps}
+  \end{center}
+  \caption{Picture of marching cubes}
+\end{figure}
+
+Given $V$, we want to extract the surface where $V=0$. Marching cubes and marching tetrahedrons are two common approaches. In both, we partition the space of points into cubes/tetrahedrons. Then, for each cube/tetrahedron, we evaluate the function at each vertex. On each edge of the cube/tetrahedron where the function is positive at one end and negative at the other, we find the point along that edge where the function would be zero, assuming it is linear. We connect all such points of the cube/tetrahedron to form triangular faces. Taking all faces from all cubes/tetrahedrons, we get the complete reconstructed surface.\cite{tri_table}
+
 
 \section{Discussion}
+
+Our visualization of a multi-view stereo reconstruction pipeline can be extended to include more algorithms at each step, allowing comparison between them. Additional steps, such as filtering and smooth, can be added. The techniques shown here can also be applied to other types of compute vision pipelines, such as visual SLAM.\cite{slam}
+
+In addition to passively viewing the output of each step in the pipeline, humans could actively assist the algorithms in certain steps of the pipeline. For example, a human could provide a coarse estimate for surface reconstruction, which could then be incrementally improved by an algorithm.
+
+
+\nocite{*}
 
 {\small
   \bibliographystyle{ieee}
